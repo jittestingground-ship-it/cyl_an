@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Preview</title>
+    <style>
+        body { background: #e5e5e5; font-family: Arial; color: #000042; }
+        .container { max-width: 600px; margin: 30px auto; background: #fff; border-radius: 12px; padding: 28px; }
+        .subject { font-weight: bold; margin-bottom: 18px; }
+        .body { margin-bottom: 22px; }
+        .btn { background: #9E2328; color: white; border: none; padding: 8px 22px; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="subject">{{ subject }}</div>
+        <div class="body">{{ body }}</div>
+        <form method="post" action="{{ url_for('send_email', order_id=request.view_args['order_id']) }}">
+            <button class="btn" type="submit">Send Email</button>
+        </form>
+    </div>
+</body>
+</html>

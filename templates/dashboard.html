@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Dashboard</title>
+    <style>
+        body { background: #e5e5e5; font-family: Arial; color: #000042; }
+        .header { background: white; padding: 10px 20px; display: flex; align-items: center; }
+        .logo { width: 40px; margin-right: 15px; }
+        .orders-table { width: 100%; margin-top: 30px; border-collapse: separate; border-spacing: 0 8px; }
+        .orders-table th { background: white; color: #000042; border-radius: 8px 8px 0 0; }
+        .orders-table td { background: #9E2328; color: white; border-radius: 0 0 8px 8px; padding: 8px; }
+        .details-btn { background: #e5e5e5; color: #000042; border-radius: 12px; padding: 4px 16px; border: none; cursor: pointer; }
+        .email-btn { background: #9E2328; color: white; border-radius: 12px; padding: 4px 16px; border: none; cursor: pointer; margin-left: 8px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="/static/jit_logo.png" class="logo" alt="JIT Logo" />
+        <h2>Order Dashboard</h2>
+    </div>
+    <table class="orders-table">
+        <tr>
+            <th>Order ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Details</th>
+            <th>Email</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order[1] }}</td>
+            <td>{{ order[2] }}</td>
+            <td>{{ order[3] }}</td>
+            <td>{{ order[4] }}</td>
+            <td>{{ order[5] }}</td>
+            <td><a href="{{ url_for('details', order_id=order[1]) }}"><button class="details-btn">Details</button></a></td>
+            <td><a href="{{ url_for('email_preview', order_id=order[1]) }}"><button class="email-btn">Email</button></a></td>
+        </tr>
+        {% endfor %}
+        {% for data in excel_data %}
+        <tr>
+            <td>{{ data.orderID }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.phone }}</td>
+            <td>{{ data.address }}</td>
+            <td><button class="details-btn">Excel Data</button></td>
+            <td><button class="email-btn">Send</button></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

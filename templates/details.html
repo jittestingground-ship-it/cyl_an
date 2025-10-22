@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Details</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { background: #e5e5e5; font-family: Arial; color: #000042; }
+        .container { display: flex; gap: 20px; margin-top: 24px; }
+        .tables { width: 30%; }
+        .table-title { color: #000042; text-align: center; font-weight: bold; font-size: 18px; margin-bottom: 8px; }
+        .info-table, .test-table { width: 100%; margin-bottom: 18px; border-collapse: collapse; }
+        .info-table td, .test-table td { text-align: center; color: white; padding: 6px; }
+        .info-table tr:nth-child(even), .test-table tr:nth-child(even) { background: #949697; }
+        .info-table tr:nth-child(odd), .test-table tr:nth-child(odd) { background: #9E2328; }
+        .chart { width: 70%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tables">
+            <div class="table-title">ORDER INFO</div>
+            <table class="info-table">
+                <tr><td>Order ID</td><td>{{ order[1] }}</td></tr>
+                <tr><td>Name</td><td>{{ order[2] }}</td></tr>
+                <tr><td>Email</td><td>{{ order[3] }}</td></tr>
+                <tr><td>Phone</td><td>{{ order[4] }}</td></tr>
+                <tr><td>Address</td><td>{{ order[5] }}</td></tr>
+            </table>
+            <div class="table-title">TEST RESULTS</div>
+            <table class="test-table">
+                <tr><td>Set Pressure</td><td>{{ meta['set_pressure'] }}</td></tr>
+                <tr><td>Avg Pressure A</td><td>{{ meta['avg_pressure_a'] }}</td></tr>
+                <tr><td>Avg Pressure B</td><td>{{ meta['avg_pressure_b'] }}</td></tr>
+                <tr><td>Max Leak Pressure</td><td>{{ meta['max_leak_pressure'] }}</td></tr>
+                <tr><td>Cycle Count</td><td>{{ meta['cycle_count'] }}</td></tr>
+                <tr><td>Test Time</td><td>{{ meta['test_time'] }}</td></tr>
+                <tr><td>Samples</td><td>{{ meta['samples'] }}</td></tr>
+                <tr><td>Test Pass/Fail</td><td>{{ meta['test_pass_fail'] }}</td></tr>
+                <tr><td>Saved At</td><td>{{ meta['saved_at'] }}</td></tr>
+            </table>
+        </div>
+        <div class="chart">
+            <div id="pressure_chart"></div>
+            <script>
+                var traceA = {
+                    x: {{ chart_data["timestamp"] }},
+                    y: {{ chart_data["pressure_a"] }},
+                    mode: 'lines',
+                    name: 'Pressure A',
+                    line: {color: '#9E2328'}
+                };
+                var traceB = {
+                    x: {{ chart_data["timestamp"] }},
+                    y: {{ chart_data["pressure_b"] }},
+                    mode: 'lines',
+                    name: 'Pressure B',
+                    line: {color: '#000042'}
+                };
+                var layout = {
+                    title: {text: 'Pressure vs Time', x:0.5},
+                    xaxis: {
+                        title: {text: 'Time (s)', font: {color: '#000042'}},
+                        range: [0, 70], dtick: 5, gridcolor: 'white'
+                    },
+                    yaxis: {
+                        title: {text: 'Pressure (psi)', standoff: 18, font: {color: '#000042'}},
+                        range: [0, 70], dtick: 10, gridcolor: 'white'
+                    },
+                    plot_bgcolor: '#e5e5e5'
+                };
+                Plotly.newPlot('pressure_chart', [traceA, traceB], layout, {responsive: true});
+            </script>
+        </div>
+    </div>
+</body>
+</html>

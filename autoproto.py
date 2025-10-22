@@ -5,6 +5,8 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 import h5py
 import random
 import smtplib
+import json
+import glob
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
@@ -80,9 +82,10 @@ def add_fake_order(order_id):
     conn.commit()
     conn.close()
 
-add_fake_order("J1002251124")
-add_fake_order("J1002251125")
-add_fake_order("J1002251126")
+# Commented out fake orders - only show Excel data
+# add_fake_order("J1002251124")
+# add_fake_order("J1002251125")
+# add_fake_order("J1002251126")
 
 app = Flask(__name__)
 
@@ -93,7 +96,20 @@ def dashboard():
     orders = c.execute("SELECT * FROM orders").fetchall()
     tests = c.execute("SELECT * FROM testing_files").fetchall()
     conn.close()
-    return render_template("dashboard.html", orders=orders, tests=tests)
+    
+    # Read Excel data files
+    excel_data = []
+    excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+    for file_path in sorted(excel_files, reverse=True):
+        try:
+            with open(file_path, 'r') as f:
+                data = json.load(f)
+                data['filename'] = os.path.basename(file_path)
+                excel_data.append(data)
+        except:
+            pass
+    
+    return render_template("dashboard.html", orders=orders, tests=tests, excel_data=excel_data)
 
 @app.route("/details/<order_id>")
 def details(order_id):
@@ -144,6 +160,18 @@ def send_email(order_id):
         server.sendmail(sender, to_addr, message)
         server.quit()
         return jsonify({"status": "Email sent"})
+    except Exception as e:
+        return jsonify({"status": "Error", "error": str(e)})
+
+@app.route("/store_data", methods=["GET", "POST"])
+def store_data():
+    try:
+        if request.method == "GET":
+            return jsonify({"status": "Ready to receive data", "endpoint": "/store_data"})
+        else:  # POST
+            data = request.get_json()
+            # Process incoming Excel data here
+            return jsonify({"status": "Data received", "data": data})
     except Exception as e:
         return jsonify({"status": "Error", "error": str(e)})
 
