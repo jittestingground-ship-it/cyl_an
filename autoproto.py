@@ -149,7 +149,7 @@ def send_email(order_id):
     conn.close()
     sender = "jitrndhost@gmail.com"
     password = "ddko ocle ezwa gsmt"
-    to_addr = order[3]
+    to_addr = "kane@jitindustries.com"
     subject = f"Order Test Report: {order[1]}"
     body = f"Order Report for {order[1]}\nCustomer: {order[2]}\nEmail: {order[3]}\n\nSee attached test results."
     message = f"Subject: {subject}\n\n{body}"
