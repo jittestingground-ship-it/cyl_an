@@ -10,6 +10,11 @@ from datetime import datetime
 from pymodbus.client import ModbusTcpClient
 import serial
 import threading
+import smtplib
+import subprocess
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 
 # Find external drive
 def find_external_drive():
@@ -77,7 +82,7 @@ class ScannerGUI:
         # Activity log
         self.log_text = scrolledtext.ScrolledText(self.root, width=50, height=15,
                                                 bg='#34495e', fg='white', font=("Courier", 10))
-        self.log_text.pack(pady=10, padx=10, fill='both', expand=True)
+        self.log_text.pack(padx=10, fill='both', expand=True)
         
         self.running = True
         self.log("Scanner GUI Started")
@@ -135,7 +140,7 @@ class ScannerGUI:
                                 pa, pb = rr.registers[0], rr.registers[1]
                                 status_detail = f"{status} | P_A:{pa} P_B:{pb}"
                                 # Update main status with live pressure readings
-                                self.update_status(f"📊 Live: P_A={pa} P_B={pb} | {status}")
+                                self.update_status(f"� Ready for Scan | {status}")
                             else:
                                 status_detail = f"{status} | Pressure: N/A"
                                 self.update_status(f"📷 Ready for Scan | {status}")
@@ -179,39 +184,37 @@ class ScannerGUI:
             return None
             
     def run_test(self, order_id):
-        self.update_status(f"🔧 Initializing Test: {order_id}")
+        self.log(f"🔧 Initializing Test: {order_id}")
         self.log(f"Starting test for {order_id}")
         
         client = ModbusTcpClient(PLC_IP, port=PLC_PORT)
         if not client.connect():
             self.log("❌ PLC connection failed")
-            self.update_status("❌ PLC Error")
             return
         
         try:
-            self.update_status("🚀 Starting PLC Test Sequence")
+            self.log("🚀 Starting PLC Test Sequence")
             client.write_coil(START_COIL, True, slave=1)
             self.log("▶️ PLC test started")
             
             # Collect data
             timestamps, pressure_a, pressure_b = [], [], []
-            self.update_status("⏳ Waiting for PLC Response...")
+            self.log("⏳ Waiting for PLC Response...")
             
             start_wait = time.time()
             while True:
                 coil = client.read_coils(RUN_COIL, 1, slave=1)
                 if not coil.isError() and coil.bits[0]:
-                    self.update_status("✅ PLC Active - Test Running")
+                    self.log("✅ PLC Active - Test Running")
                     self.log("📊 Test running...")
                     break
                 if time.time() - start_wait > 60:  # Wait up to 60 seconds for C1 coil activation
                     self.log("❌ Test timeout - C1 coil did not activate within 60 seconds")
-                    self.update_status("❌ PLC Timeout")
                     return
                 # Show remaining wait time
                 elapsed = time.time() - start_wait
                 remaining = 60 - elapsed
-                self.update_status(f"⏳ Waiting for C1 coil... {remaining:.0f}s remaining")
+                self.log(f"⏳ Waiting for C1 coil... {remaining:.0f}s remaining")
                 time.sleep(0.5)
             
             # Data collection loop with live updates
@@ -222,7 +225,7 @@ class ScannerGUI:
             for i in range(MAX_SAMPLES):
                 coil = client.read_coils(RUN_COIL, 1, slave=1)
                 if coil.isError() or not coil.bits[0]:
-                    self.update_status("⏹️ Test Sequence Complete")
+                    self.log("⏹️ Test Sequence Complete")
                     self.log("⏹️ Test complete")
                     break
                 
@@ -237,12 +240,12 @@ class ScannerGUI:
                         pa_val = rr.registers[0]
                         pb_val = rr.registers[1] 
                         elapsed_time = time.time() - test_start_time
-                        self.update_status(f"📊 Testing: P_A={pa_val} P_B={pb_val} [{sample_count} samples] {elapsed_time:.1f}s")
+                        self.log(f"📊 Testing: P_A={pa_val} P_B={pb_val} [{sample_count} samples] {elapsed_time:.1f}s")
                         last_update_time = time.time()
                 else:
                     pressure_a.append(-1)
                     pressure_b.append(-1)
-                    self.update_status(f"⚠️ Read Error - Sample {sample_count}")
+                    self.log(f"⚠️ Read Error - Sample {sample_count}")
                     
                 # Store timestamp as seconds from test start (0, 0.01, 0.02, etc.)
                 elapsed_seconds = time.time() - test_start_time
@@ -251,20 +254,20 @@ class ScannerGUI:
             
             # Save data with live feedback
             if len(pressure_a) > 0:
-                self.update_status(f"💾 Saving {len(pressure_a)} samples...")
+                self.log(f"💾 Saving {len(pressure_a)} samples...")
                 file_path = f"{DATA_DIR}/{order_id}_{datetime.now().strftime('%Y%m%dT%H%M%S')}.h5"
                 
                 with h5py.File(file_path, "w") as f:
-                    self.update_status("💾 Writing timestamp data...")
+                    self.log("💾 Writing timestamp data...")
                     f.create_dataset("data/timestamp", data=np.array(timestamps), compression="gzip")
                     
-                    self.update_status("💾 Writing pressure A data...")
+                    self.log("💾 Writing pressure A data...")
                     f.create_dataset("data/pressure_a", data=np.array(pressure_a), compression="gzip")
                     
-                    self.update_status("💾 Writing pressure B data...")
+                    self.log("💾 Writing pressure B data...")
                     f.create_dataset("data/pressure_b", data=np.array(pressure_b), compression="gzip")
                     
-                    self.update_status("💾 Writing metadata...")
+                    self.log("💾 Writing metadata...")
                     meta_grp = f.create_group("metadata")
                     meta_grp.create_dataset("order_id", data=order_id.encode('utf-8'))
                     meta_grp.create_dataset("samples", data=len(pressure_a))
@@ -273,7 +276,9 @@ class ScannerGUI:
                     meta_grp.create_dataset("test_started_at", data=int(test_start_time * 1000))  # Original timestamp in ms
                 
                 self.log(f"✅ Saved: {file_path} ({len(pressure_a)} samples)")
-                self.update_status(f"✅ Complete: {order_id} - {len(pressure_a)} samples saved")
+                
+                # Auto-send email after test completion
+                self.send_test_email(order_id, len(pressure_a))
                 
                 # Signal system monitor that test result is recorded
                 with open('/home/kw/cyl_a/test_complete.flag', 'w') as f:
@@ -281,11 +286,70 @@ class ScannerGUI:
                     
             else:
                 self.log("⚠️ No data collected")
-                self.update_status("⚠️ No Data - Test Failed")
+                self.log("⚠️ No Data - Test Failed")
                 
         finally:
             client.write_coil(START_COIL, False, slave=1)
             client.close()
+    
+    def send_test_email(self, order_id, sample_count):
+        """Auto-send email with screenshot of preview page"""
+        try:
+            self.log(f"📧 Capturing email preview for {order_id}...")
+            
+            # Wait for data to be fully saved
+            time.sleep(2)
+            
+            # Take screenshot of email preview page
+            preview_url = f"http://192.168.1.19:5050/email_preview/{order_id}"
+            screenshot_path = f"/tmp/email_preview_{order_id}.png"
+            
+            # Use chromium to capture screenshot
+            screenshot_cmd = [
+                "chromium-browser", "--headless", "--disable-gpu",
+                "--window-size=1200,800", "--screenshot=" + screenshot_path,
+                preview_url
+            ]
+            
+            result = subprocess.run(screenshot_cmd, capture_output=True, timeout=30)
+            
+            if os.path.exists(screenshot_path):
+                # Send email with screenshot attachment
+                sender = "jitrndhost@gmail.com"
+                password = "ddko ocle ezwa gsmt"
+                to_addr = "kane@jitindustries.com"
+                
+                msg = MIMEMultipart()
+                msg['From'] = sender
+                msg['To'] = to_addr
+                msg['Subject'] = f"Test Results Complete - Order {order_id}"
+                
+                # Embed screenshot inline
+                with open(screenshot_path, 'rb') as f:
+                    img = MIMEImage(f.read())
+                    img.add_header('Content-ID', '<test_results>')
+                    img.add_header('Content-Disposition', 'inline')
+                    msg.attach(img)
+                
+                # Add HTML body to display full image without cropping
+                html_body = f'<html><body style="margin:0; padding:10px; overflow:auto;"><img src="cid:test_results" alt="Test Results {order_id}" style="width:100%; height:auto; display:block;"></body></html>'
+                msg.attach(MIMEText(html_body, 'html'))
+                
+                server = smtplib.SMTP("smtp.gmail.com", 587)
+                server.starttls()
+                server.login(sender, password)
+                server.sendmail(sender, to_addr, msg.as_string())
+                server.quit()
+                
+                # Clean up screenshot file
+                os.remove(screenshot_path)
+                
+                self.log(f"📧 Email with screenshot sent for {order_id}")
+            else:
+                self.log(f"📧 Screenshot failed for {order_id}")
+                
+        except Exception as e:
+            self.log(f"📧 Email failed: {str(e)}")
     
     def scanner_loop(self):
         while self.running:

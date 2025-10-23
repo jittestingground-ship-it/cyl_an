@@ -11,6 +11,7 @@
         .orders-table td { background: #9E2328; color: white; border-radius: 0 0 8px 8px; padding: 8px; }
         .details-btn { background: #e5e5e5; color: #000042; border-radius: 12px; padding: 4px 16px; border: none; cursor: pointer; }
         .email-btn { background: #9E2328; color: white; border-radius: 12px; padding: 4px 16px; border: none; cursor: pointer; margin-left: 8px; }
+        .email-header { color: green; }
     </style>
 </head>
 <body>
@@ -26,8 +27,19 @@
             <th>Phone</th>
             <th>Address</th>
             <th>Details</th>
-            <th>Email</th>
+            <th class="email-header">Preview</th>
         </tr>
+        {% for data in excel_data %}
+        <tr>
+            <td>{{ data.orderID }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.phone }}</td>
+            <td>{{ data.address }}</td>
+            <td><a href="{{ url_for('details', order_id=data.orderID) }}"><button class="details-btn">Details</button></a></td>
+            <td><a href="{{ url_for('email_preview', order_id=data.orderID) }}"><button class="email-btn">Preview</button></a></td>
+        </tr>
+        {% endfor %}
         {% for order in orders %}
         <tr>
             <td>{{ order[1] }}</td>
@@ -37,17 +49,6 @@
             <td>{{ order[5] }}</td>
             <td><a href="{{ url_for('details', order_id=order[1]) }}"><button class="details-btn">Details</button></a></td>
             <td><a href="{{ url_for('email_preview', order_id=order[1]) }}"><button class="email-btn">Email</button></a></td>
-        </tr>
-        {% endfor %}
-        {% for data in excel_data %}
-        <tr>
-            <td>{{ data.orderID }}</td>
-            <td>{{ data.name }}</td>
-            <td>{{ data.email }}</td>
-            <td>{{ data.phone }}</td>
-            <td>{{ data.address }}</td>
-            <td><a href="{{ url_for('details', order_id=data.orderID) }}"><button class="details-btn">Details</button></a></td>
-            <td><button class="email-btn">Send</button></td>
         </tr>
         {% endfor %}
     </table>

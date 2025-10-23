@@ -87,6 +87,9 @@ def add_fake_order(order_id):
 # add_fake_order("J1002251125")
 # add_fake_order("J1002251126")
 
+# Email configuration
+DEFAULT_EMAIL = "kane@jitindustries.com"
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -246,9 +249,87 @@ def email_preview(order_id):
     order = c.execute("SELECT * FROM orders WHERE orderID=?", (order_id,)).fetchone()
     test_file = c.execute("SELECT file_path FROM testing_files WHERE order_id=?", (order_id,)).fetchone()
     conn.close()
-    body = f"Order Report for {order[1]}\nCustomer: {order[2]}\nEmail: {order[3]}\n\nSee attached test results."
-    subject = f"Order Test Report: {order[1]}"
-    return render_template("email_preview.html", subject=subject, body=body, test_file=test_file[0])
+    
+    # If order not in database, check Excel data
+    if not order:
+        excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+        for file_path in excel_files:
+            try:
+                with open(file_path, 'r') as f:
+                    data = json.load(f)
+                    if data.get('orderID') == order_id:
+                        order = (None, data.get('orderID'), data.get('name'), 
+                                data.get('email'), data.get('phone'), data.get('address'))
+                        break
+            except:
+                pass
+    
+    # Look for test data in test_data folder
+    test_results = ""
+    test_data_dir = "/home/kw/cyl_a/test_data"
+    if os.path.exists(test_data_dir):
+        h5_files = glob.glob(f"{test_data_dir}/{order_id}_*.h5")
+        if h5_files:
+            latest_file = max(h5_files, key=os.path.getctime)
+            try:
+                with h5py.File(latest_file, "r") as f:
+                    pressure_a_data = f["data/pressure_a"][:]
+                    pressure_b_data = f["data/pressure_b"][:]
+                    
+                    # Calculate test metrics
+                    pa_avg = sum(pressure_a_data) / len(pressure_a_data)
+                    pb_avg = sum(pressure_b_data) / len(pressure_b_data)
+                    max_diff = max(abs(a-b) for a,b in zip(pressure_a_data, pressure_b_data))
+                    samples = len(pressure_a_data)
+                    
+                    test_results = f"""
+TEST RESULTS SUMMARY:
+- Samples Collected: {samples}
+- Average Pressure A: {pa_avg:.2f} PSI
+- Average Pressure B: {pb_avg:.2f} PSI
+- Maximum Pressure Difference: {max_diff:.2f} PSI
+- Test Status: {"PASS" if max_diff < 5 else "FAIL"}
+"""
+            except:
+                test_results = "Test data file found but could not be read."
+        else:
+            test_results = "No test data available for this order."
+    
+    body = f"""Dear {order[2] if order else 'Customer'},
+
+Your cylinder test for Order ID: {order_id} has been completed.
+
+ORDER DETAILS:
+- Order ID: {order[1] if order else order_id}
+- Customer: {order[2] if order else 'N/A'}
+- Email: {order[3] if order else 'N/A'}
+- Phone: {order[4] if order else 'N/A'}
+
+{test_results}
+
+Please contact us if you have any questions about your test results.
+
+Best regards,
+JIT Industries Test Department
+"""
+    
+    subject = f"Test Results Complete - Order {order_id}"
+    
+    # Get chart data for email preview
+    chart_data = {"pressure_a": [], "pressure_b": [], "timestamp": []}
+    if os.path.exists(test_data_dir):
+        h5_files = glob.glob(f"{test_data_dir}/{order_id}_*.h5")
+        if h5_files:
+            latest_file = max(h5_files, key=os.path.getctime)
+            try:
+                with h5py.File(latest_file, "r") as f:
+                    chart_data["pressure_a"] = [float(x) for x in f["data/pressure_a"][:]]
+                    chart_data["pressure_b"] = [float(x) for x in f["data/pressure_b"][:]]
+                    chart_data["timestamp"] = [float(x) for x in f["data/timestamp"][:]]
+            except:
+                pass
+    
+    return render_template("email_preview.html", subject=subject, body=body, test_file=latest_file if 'latest_file' in locals() else None, chart_data=chart_data)
 
 @app.route("/send_email/<order_id>", methods=["POST"])
 def send_email(order_id):
@@ -257,11 +338,74 @@ def send_email(order_id):
     order = c.execute("SELECT * FROM orders WHERE orderID=?", (order_id,)).fetchone()
     test_file = c.execute("SELECT file_path FROM testing_files WHERE order_id=?", (order_id,)).fetchone()
     conn.close()
+    
+    # If order not in database, check Excel data
+    if not order:
+        excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+        for file_path in excel_files:
+            try:
+                with open(file_path, 'r') as f:
+                    data = json.load(f)
+                    if data.get('orderID') == order_id:
+                        order = (None, data.get('orderID'), data.get('name'), 
+                                data.get('email'), data.get('phone'), data.get('address'))
+                        break
+            except:
+                pass
+    
+    # Get test results for email body
+    test_results = ""
+    test_data_dir = "/home/kw/cyl_a/test_data"
+    if os.path.exists(test_data_dir):
+        h5_files = glob.glob(f"{test_data_dir}/{order_id}_*.h5")
+        if h5_files:
+            latest_file = max(h5_files, key=os.path.getctime)
+            try:
+                with h5py.File(latest_file, "r") as f:
+                    pressure_a_data = f["data/pressure_a"][:]
+                    pressure_b_data = f["data/pressure_b"][:]
+                    
+                    # Calculate test metrics
+                    pa_avg = sum(pressure_a_data) / len(pressure_a_data)
+                    pb_avg = sum(pressure_b_data) / len(pressure_b_data)
+                    max_diff = max(abs(a-b) for a,b in zip(pressure_a_data, pressure_b_data))
+                    samples = len(pressure_a_data)
+                    
+                    test_results = f"""
+TEST RESULTS SUMMARY:
+- Samples Collected: {samples}
+- Average Pressure A: {pa_avg:.2f} PSI
+- Average Pressure B: {pb_avg:.2f} PSI  
+- Maximum Pressure Difference: {max_diff:.2f} PSI
+- Test Status: {"PASS" if max_diff < 5 else "FAIL"}
+"""
+            except:
+                test_results = "Test data file found but could not be read."
+    
     sender = "jitrndhost@gmail.com"
     password = "ddko ocle ezwa gsmt"
-    to_addr = "kane@jitindustries.com"
-    subject = f"Order Test Report: {order[1]}"
-    body = f"Order Report for {order[1]}\nCustomer: {order[2]}\nEmail: {order[3]}\n\nSee attached test results."
+    # Always send to default email, not customer email
+    to_addr = DEFAULT_EMAIL
+    
+    subject = f"Test Results Complete - Order {order_id}"
+    body = f"""Dear {order[2] if order else 'Customer'},
+
+Your cylinder test for Order ID: {order_id} has been completed.
+
+ORDER DETAILS:
+- Order ID: {order[1] if order else order_id}
+- Customer: {order[2] if order else 'N/A'}
+- Email: {order[3] if order else 'N/A'}
+- Phone: {order[4] if order else 'N/A'}
+
+{test_results}
+
+Please contact us if you have any questions about your test results.
+
+Best regards,
+JIT Industries Test Department
+"""
+    
     message = f"Subject: {subject}\n\n{body}"
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
@@ -269,7 +413,7 @@ def send_email(order_id):
         server.login(sender, password)
         server.sendmail(sender, to_addr, message)
         server.quit()
-        return jsonify({"status": "Email sent"})
+        return jsonify({"status": f"Email sent to {to_addr}"})
     except Exception as e:
         return jsonify({"status": "Error", "error": str(e)})
 
