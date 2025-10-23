@@ -46,17 +46,33 @@ class ScannerGUI:
         self.root.geometry("400x300+350+200")  # Centered height
         self.root.configure(bg='#2c3e50')
         
+        # Keep window on top and prevent focus issues
+        self.root.attributes('-topmost', True)
+        self.root.lift()
+        self.root.focus_force()
+        
         # Status display
         self.status_label = tk.Label(self.root, text="Scanner Initializing...", 
                                    font=("Arial", 16, "bold"), fg="white", bg='#2c3e50')
         self.status_label.pack(pady=20)
         
-        # PLC Test Button
-        self.test_button = tk.Button(self.root, text="Test PLC Connection", 
-                                   command=self.test_plc_connection,
-                                   font=("Arial", 12), bg='#3498db', fg='white',
-                                   width=20, height=2)
-        self.test_button.pack(pady=10)
+        # PLC Status Indicator
+        self.plc_frame = tk.Frame(self.root, bg='#2c3e50')
+        self.plc_frame.pack(pady=10)
+        
+        self.plc_status_label = tk.Label(self.plc_frame, text="PLC Status:", 
+                                       font=("Arial", 12, "bold"), fg="white", bg='#2c3e50')
+        self.plc_status_label.pack(side='left', padx=5)
+        
+        # Status light (circle)
+        self.status_light = tk.Label(self.plc_frame, text="●", font=("Arial", 20), 
+                                   fg="gray", bg='#2c3e50')
+        self.status_light.pack(side='left', padx=5)
+        
+        # PLC status text
+        self.plc_text = tk.Label(self.plc_frame, text="Checking...", 
+                               font=("Arial", 12), fg="white", bg='#2c3e50')
+        self.plc_text.pack(side='left', padx=5)
         
         # Activity log
         self.log_text = scrolledtext.ScrolledText(self.root, width=50, height=15,
@@ -66,52 +82,86 @@ class ScannerGUI:
         self.running = True
         self.log("Scanner GUI Started")
         
+        # Start PLC monitoring thread
+        self.plc_thread = threading.Thread(target=self.monitor_plc_status, daemon=True)
+        self.plc_thread.start()
+        
         # Start scanner thread
         self.scanner_thread = threading.Thread(target=self.scanner_loop, daemon=True)
         self.scanner_thread.start()
         
     def log(self, message):
+        # Thread-safe GUI update
+        self.root.after(0, lambda: self._update_log(message))
+        
+    def _update_log(self, message):
         self.log_text.insert(tk.END, f"{message}\n")
         self.log_text.see(tk.END)
-        self.root.update()
         
     def update_status(self, status):
-        self.status_label.config(text=status)
-        self.root.update()
-    
-    def test_plc_connection(self):
-        """Test PLC connection and display status"""
-        print("PLC test button clicked!")  # Debug
-        self.log("🔍 Testing PLC connection...")
-        self.update_status("🔍 Testing PLC")
+        # Thread-safe GUI update
+        self.root.after(0, lambda: self._update_status(status))
         
-        try:
-            client = ModbusTcpClient(PLC_IP, port=PLC_PORT)
-            if client.connect():
-                self.log(f"✅ PLC connected at {PLC_IP}:{PLC_PORT}")
-                
-                # Test reading a coil
-                coil = client.read_coils(RUN_COIL, 1)
-                if not coil.isError():
-                    status = "RUNNING" if coil.bits[0] else "STOPPED"
-                    self.log(f"📊 PLC Status: {status}")
-                    self.update_status(f"✅ PLC {status}")
+    def _update_status(self, status):
+        self.status_label.config(text=status)
+    
+    def update_plc_status(self, connected, status_text, error_msg=None):
+        """Update PLC status indicator"""
+        if connected:
+            self.root.after(0, lambda: self.status_light.config(fg="green"))
+            self.root.after(0, lambda: self.plc_text.config(text=status_text, fg="lightgreen"))
+        else:
+            self.root.after(0, lambda: self.status_light.config(fg="red"))
+            self.root.after(0, lambda: self.plc_text.config(text=status_text, fg="lightcoral"))
+            if error_msg:
+                self.log(f"❌ PLC Error: {error_msg}")
+    
+    def monitor_plc_status(self):
+        """Continuously monitor PLC connection status"""
+        while self.running:
+            try:
+                client = ModbusTcpClient(PLC_IP, port=PLC_PORT)
+                if client.connect():
+                    # Test reading a coil to verify communication
+                    coil = client.read_coils(RUN_COIL, 1, slave=1)
+                    if not coil.isError():
+                        is_running = coil.bits[0]
+                        status = "RUNNING" if is_running else "READY"
+                        
+                        # Try to read pressure values for live display in main status
+                        try:
+                            rr = client.read_holding_registers(PRESSURE_ADDR, REG_COUNT, slave=1)
+                            if not rr.isError():
+                                pa, pb = rr.registers[0], rr.registers[1]
+                                status_detail = f"{status} | P_A:{pa} P_B:{pb}"
+                                # Update main status with live pressure readings
+                                self.update_status(f"📊 Live: P_A={pa} P_B={pb} | {status}")
+                            else:
+                                status_detail = f"{status} | Pressure: N/A"
+                                self.update_status(f"📷 Ready for Scan | {status}")
+                        except:
+                            status_detail = status
+                            self.update_status(f"📷 Ready for Scan | {status}")
+                            
+                        self.update_plc_status(True, status_detail)
+                        # Don't print debug info since status is now in main display
+                    else:
+                        self.update_plc_status(False, "Read Error", "Cannot read coil data")
+                        self.update_status("❌ PLC Read Error")
+                    client.close()
                 else:
-                    self.log(f"⚠️ Error reading coil {RUN_COIL}")
-                    self.update_status("⚠️ PLC Read Error")
+                    self.update_plc_status(False, "Disconnected", f"Cannot connect to {PLC_IP}:{PLC_PORT}")
+                    self.update_status("❌ PLC Disconnected")
                     
-                client.close()
-            else:
-                self.log(f"❌ PLC connection failed: {PLC_IP}:{PLC_PORT}")
-                self.update_status("❌ PLC Offline")
+            except Exception as e:
+                self.update_plc_status(False, "Error", str(e))
+                self.update_status("❌ PLC Error")
                 
-        except Exception as e:
-            self.log(f"❌ PLC error: {e}")
-            self.update_status("❌ PLC Error")
+            time.sleep(2)  # Check every 2 seconds for more responsive updates
         
     def get_barcode(self):
         try:
-            ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=1)
+            ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=0.1)  # Short timeout
             self.log(f"Scanner ready on {SERIAL_PORT}")
             self.update_status("📷 Ready for Scan")
             
@@ -119,14 +169,17 @@ class ScannerGUI:
                 line = ser.readline().decode(errors="ignore").strip()
                 if line:
                     self.log(f"📦 Scanned: {line}")
+                    ser.close()
                     return line
+                time.sleep(0.1)  # Small delay to prevent CPU spinning
         except Exception as e:
             self.log("Please connect scanner.")
             self.update_status("Please connect scanner.")
+            time.sleep(2)  # Wait before retrying
             return None
             
     def run_test(self, order_id):
-        self.update_status(f"🔧 Testing {order_id}")
+        self.update_status(f"🔧 Initializing Test: {order_id}")
         self.log(f"Starting test for {order_id}")
         
         client = ModbusTcpClient(PLC_IP, port=PLC_PORT)
@@ -136,28 +189,40 @@ class ScannerGUI:
             return
         
         try:
-            client.write_coil(START_COIL, True, unit=1)
+            self.update_status("🚀 Starting PLC Test Sequence")
+            client.write_coil(START_COIL, True, slave=1)
             self.log("▶️ PLC test started")
             
             # Collect data
             timestamps, pressure_a, pressure_b = [], [], []
-            self.log("⏳ Collecting data...")
+            self.update_status("⏳ Waiting for PLC Response...")
             
             start_wait = time.time()
             while True:
                 coil = client.read_coils(RUN_COIL, 1, slave=1)
                 if not coil.isError() and coil.bits[0]:
+                    self.update_status("✅ PLC Active - Test Running")
                     self.log("📊 Test running...")
                     break
-                if time.time() - start_wait > 10:
-                    self.log("❌ Test timeout")
+                if time.time() - start_wait > 60:  # Wait up to 60 seconds for C1 coil activation
+                    self.log("❌ Test timeout - C1 coil did not activate within 60 seconds")
+                    self.update_status("❌ PLC Timeout")
                     return
-                time.sleep(0.1)
+                # Show remaining wait time
+                elapsed = time.time() - start_wait
+                remaining = 60 - elapsed
+                self.update_status(f"⏳ Waiting for C1 coil... {remaining:.0f}s remaining")
+                time.sleep(0.5)
             
-            # Data collection loop
+            # Data collection loop with live updates
+            sample_count = 0
+            last_update_time = time.time()
+            test_start_time = time.time()  # Record when test data collection starts
+            
             for i in range(MAX_SAMPLES):
                 coil = client.read_coils(RUN_COIL, 1, slave=1)
                 if coil.isError() or not coil.bits[0]:
+                    self.update_status("⏹️ Test Sequence Complete")
                     self.log("⏹️ Test complete")
                     break
                 
@@ -165,26 +230,50 @@ class ScannerGUI:
                 if not rr.isError():
                     pressure_a.append(rr.registers[0])
                     pressure_b.append(rr.registers[1])
+                    sample_count += 1
+                    
+                    # Live status updates every 0.5 seconds
+                    if time.time() - last_update_time > 0.5:
+                        pa_val = rr.registers[0]
+                        pb_val = rr.registers[1] 
+                        elapsed_time = time.time() - test_start_time
+                        self.update_status(f"📊 Testing: P_A={pa_val} P_B={pb_val} [{sample_count} samples] {elapsed_time:.1f}s")
+                        last_update_time = time.time()
                 else:
                     pressure_a.append(-1)
                     pressure_b.append(-1)
-                timestamps.append(int(time.time() * 1000))
+                    self.update_status(f"⚠️ Read Error - Sample {sample_count}")
+                    
+                # Store timestamp as seconds from test start (0, 0.01, 0.02, etc.)
+                elapsed_seconds = time.time() - test_start_time
+                timestamps.append(elapsed_seconds)
                 time.sleep(INTERVAL)
             
-            # Save data
+            # Save data with live feedback
             if len(pressure_a) > 0:
+                self.update_status(f"💾 Saving {len(pressure_a)} samples...")
                 file_path = f"{DATA_DIR}/{order_id}_{datetime.now().strftime('%Y%m%dT%H%M%S')}.h5"
-                with h5py.File(file_path, "w") as f:
-                    f.create_dataset("data/timestamp", data=np.array(timestamps), compression="gzip")
-                    f.create_dataset("data/pressure_a", data=np.array(pressure_a), compression="gzip")
-                    f.create_dataset("data/pressure_b", data=np.array(pressure_b), compression="gzip")
-                    meta_grp = f.create_group("metadata")
-                    meta_grp.create_dataset("order_id", data=np.string_(order_id))
-                    meta_grp.create_dataset("samples", data=len(pressure_a))
-                    meta_grp.create_dataset("saved_at", data=np.string_(datetime.now().isoformat()))
                 
-                self.log(f"✅ Saved: {file_path}")
-                self.update_status("✅ Test Complete")
+                with h5py.File(file_path, "w") as f:
+                    self.update_status("💾 Writing timestamp data...")
+                    f.create_dataset("data/timestamp", data=np.array(timestamps), compression="gzip")
+                    
+                    self.update_status("💾 Writing pressure A data...")
+                    f.create_dataset("data/pressure_a", data=np.array(pressure_a), compression="gzip")
+                    
+                    self.update_status("💾 Writing pressure B data...")
+                    f.create_dataset("data/pressure_b", data=np.array(pressure_b), compression="gzip")
+                    
+                    self.update_status("💾 Writing metadata...")
+                    meta_grp = f.create_group("metadata")
+                    meta_grp.create_dataset("order_id", data=order_id.encode('utf-8'))
+                    meta_grp.create_dataset("samples", data=len(pressure_a))
+                    meta_grp.create_dataset("saved_at", data=datetime.now().isoformat().encode('utf-8'))
+                    # Store actual timestamp for metadata (not the 0-based test timestamps)
+                    meta_grp.create_dataset("test_started_at", data=int(test_start_time * 1000))  # Original timestamp in ms
+                
+                self.log(f"✅ Saved: {file_path} ({len(pressure_a)} samples)")
+                self.update_status(f"✅ Complete: {order_id} - {len(pressure_a)} samples saved")
                 
                 # Signal system monitor that test result is recorded
                 with open('/home/kw/cyl_a/test_complete.flag', 'w') as f:
@@ -192,96 +281,18 @@ class ScannerGUI:
                     
             else:
                 self.log("⚠️ No data collected")
-                self.update_status("⚠️ No Data")
+                self.update_status("⚠️ No Data - Test Failed")
                 
         finally:
-            client.write_coil(START_COIL, False, unit=1)
+            client.write_coil(START_COIL, False, slave=1)
             client.close()
     
-    def wait_for_manual_test(self, order_id):
-        """Wait 60 seconds for user to manually start PLC test"""
-        client = ModbusTcpClient(PLC_IP, port=PLC_PORT)
-        if not client.connect():
-            self.log("❌ PLC connection failed")
-            self.update_status("❌ PLC Error")
-            return
-            
-        self.log(f"📋 Order: {order_id} - Start test manually!")
-        self.update_status("⏳ 60s Window")
-        
-        # Wait up to 60 seconds for manual test start
-        start_time = time.time()
-        while time.time() - start_time < 60:
-            try:
-                # Check if PLC test is running
-                coil = client.read_coils(RUN_COIL, 1, slave=1)
-                if not coil.isError() and coil.bits[0]:
-                    self.log("✅ Manual test detected!")
-                    # Monitor and collect data during manual test
-                    self.monitor_manual_test(order_id, client)
-                    return
-            except:
-                pass
-            time.sleep(0.5)
-        
-        # 60 seconds elapsed, no test started
-        self.log("⏰ 60s window expired - no test started")
-        self.update_status("⏰ Timeout")
-        client.close()
-        
-    def monitor_manual_test(self, order_id, client):
-        """Monitor manually started test and collect data"""
-        timestamps, pressure_a, pressure_b = [], [], []
-        self.log("📊 Collecting manual test data...")
-        self.update_status("📊 Recording")
-        
-        # Collect data while test is running
-        while True:
-            try:
-                coil = client.read_coils(RUN_COIL, 1, slave=1)
-                if coil.isError() or not coil.bits[0]:
-                    break  # Test finished
-                    
-                # Read pressure data (mock for now)
-                timestamp = time.time()
-                timestamps.append(timestamp)
-                pressure_a.append(random.uniform(30, 70))
-                pressure_b.append(random.uniform(25, 65))
-                
-                time.sleep(INTERVAL)
-            except:
-                break
-        
-        client.close()
-        
-        # Save collected data
-        if timestamps:
-            file_path = f"/home/kw/cyl_a/data/{order_id}_manual_test.h5"
-            with h5py.File(file_path, "w") as f:
-                f.create_dataset("data/timestamp", data=np.array(timestamps), compression="gzip")
-                f.create_dataset("data/pressure_a", data=np.array(pressure_a), compression="gzip") 
-                f.create_dataset("data/pressure_b", data=np.array(pressure_b), compression="gzip")
-                meta_grp = f.create_group("metadata")
-                meta_grp.create_dataset("order_id", data=np.string_(order_id))
-                meta_grp.create_dataset("samples", data=len(pressure_a))
-                meta_grp.create_dataset("saved_at", data=np.string_(datetime.now().isoformat()))
-            
-            self.log(f"✅ Manual test saved: {file_path}")
-            self.update_status("✅ Manual Complete")
-            
-            # Signal completion
-            with open('/home/kw/cyl_a/test_complete.flag', 'w') as f:
-                f.write(order_id)
-        else:
-            self.log("⚠️ No manual test data collected")
-            self.update_status("⚠️ No Data")
-            
     def scanner_loop(self):
         while self.running:
             try:
                 order_id = self.get_barcode()
                 if order_id and order_id.lower() not in ["quit", "exit"]:
-                    self.wait_for_manual_test(order_id)
+                    self.run_test(order_id)
                     time.sleep(1)
                     self.update_status("📷 Ready for Scan")
             except Exception as e:

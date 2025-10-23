@@ -28,6 +28,10 @@
             </table>
             <div class="table-title">TEST RESULTS</div>
             <table class="test-table">
+                {% if meta.get('message') %}
+                <tr><td colspan="2">{{ meta['message'] }}</td></tr>
+                <tr><td colspan="2">Scan barcode to run test</td></tr>
+                {% else %}
                 <tr><td>Set Pressure</td><td>{{ meta['set_pressure'] }}</td></tr>
                 <tr><td>Avg Pressure A</td><td>{{ meta['avg_pressure_a'] }}</td></tr>
                 <tr><td>Avg Pressure B</td><td>{{ meta['avg_pressure_b'] }}</td></tr>
@@ -37,9 +41,11 @@
                 <tr><td>Samples</td><td>{{ meta['samples'] }}</td></tr>
                 <tr><td>Test Pass/Fail</td><td>{{ meta['test_pass_fail'] }}</td></tr>
                 <tr><td>Saved At</td><td>{{ meta['saved_at'] }}</td></tr>
+                {% endif %}
             </table>
         </div>
         <div class="chart">
+            {% if chart_data["timestamp"] %}
             <div id="pressure_chart"></div>
             <script>
                 var traceA = {
@@ -70,6 +76,12 @@
                 };
                 Plotly.newPlot('pressure_chart', [traceA, traceB], layout, {responsive: true});
             </script>
+            {% else %}
+            <div style="text-align: center; padding: 100px; color: #000042; font-size: 18px;">
+                <h3>No Test Data Available</h3>
+                <p>Use barcode scanner to run test for this order</p>
+            </div>
+            {% endif %}
         </div>
     </div>
 </body>

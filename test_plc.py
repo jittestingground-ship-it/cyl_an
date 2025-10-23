@@ -13,7 +13,7 @@ try:
         print("✅ PLC connected successfully!")
         
         # Test reading a coil
-        coil = client.read_coils(RUN_COIL, 1)
+        coil = client.read_coils(RUN_COIL, 1, slave=1)
         if not coil.isError():
             status = "RUNNING" if coil.bits[0] else "STOPPED"
             print(f"📊 PLC Status: {status}")

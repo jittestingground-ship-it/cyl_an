@@ -46,7 +46,7 @@
             <td>{{ data.email }}</td>
             <td>{{ data.phone }}</td>
             <td>{{ data.address }}</td>
-            <td><button class="details-btn">Excel Data</button></td>
+            <td><a href="{{ url_for('details', order_id=data.orderID) }}"><button class="details-btn">Details</button></a></td>
             <td><button class="email-btn">Send</button></td>
         </tr>
         {% endfor %}

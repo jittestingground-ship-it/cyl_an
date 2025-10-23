@@ -97,17 +97,28 @@ def dashboard():
     tests = c.execute("SELECT * FROM testing_files").fetchall()
     conn.close()
     
-    # Read Excel data files
+    # Read Excel data files and sort by timestamp (newest first)
     excel_data = []
     excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
-    for file_path in sorted(excel_files, reverse=True):
+    
+    # Extract timestamp from filename and sort
+    file_data = []
+    for file_path in excel_files:
         try:
             with open(file_path, 'r') as f:
                 data = json.load(f)
                 data['filename'] = os.path.basename(file_path)
-                excel_data.append(data)
+                
+                # Extract timestamp from filename (excel_data_YYYYMMDD_HHMMSS.json)
+                filename = os.path.basename(file_path)
+                timestamp_str = filename.replace('excel_data_', '').replace('.json', '')
+                file_data.append((timestamp_str, data))
         except:
             pass
+    
+    # Sort by timestamp (newest first) and extract data
+    file_data.sort(key=lambda x: x[0], reverse=True)
+    excel_data = [item[1] for item in file_data]
     
     return render_template("dashboard.html", orders=orders, tests=tests, excel_data=excel_data)
 
@@ -118,15 +129,114 @@ def details(order_id):
     order = c.execute("SELECT * FROM orders WHERE orderID=?", (order_id,)).fetchone()
     test_file = c.execute("SELECT file_path FROM testing_files WHERE order_id=?", (order_id,)).fetchone()
     conn.close()
+    
+    # If order not in database, check if it's from Excel data
+    if not order:
+        # Look for Excel data with this order ID
+        excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+        for file_path in excel_files:
+            try:
+                with open(file_path, 'r') as f:
+                    data = json.load(f)
+                    if data.get('orderID') == order_id:
+                        # Create fake order tuple to match database format
+                        order = (None, data.get('orderID'), data.get('name'), 
+                                data.get('email'), data.get('phone'), data.get('address'))
+                        break
+            except:
+                pass
+    
     chart_data = {"pressure_a": [], "pressure_b": [], "timestamp": []}
     meta = {}
+    
+    # First check database for test file
     if test_file:
-        with h5py.File(test_file[0], "r") as f:
-            chart_data["pressure_a"] = f["data/pressure_a"][:].tolist()
-            chart_data["pressure_b"] = f["data/pressure_b"][:].tolist()
-            chart_data["timestamp"] = f["data/timestamp"][:].tolist()
-            m = f["metadata"].attrs
-            meta = dict(m.items())
+        try:
+            with h5py.File(test_file[0], "r") as f:
+                chart_data["pressure_a"] = f["data/pressure_a"][:].tolist()
+                chart_data["pressure_b"] = f["data/pressure_b"][:].tolist()
+                chart_data["timestamp"] = f["data/timestamp"][:].tolist()
+                m = f["metadata"].attrs
+                meta = dict(m.items())
+        except:
+            test_file = None
+    
+    # If no database file, look in test_data folder where scanner saves
+    if not test_file:
+        test_data_dir = "/home/kw/cyl_a/test_data"
+        if os.path.exists(test_data_dir):
+            # Find H5 files matching this order ID
+            h5_files = glob.glob(f"{test_data_dir}/{order_id}_*.h5")
+            if h5_files:
+                # Use the most recent file
+                latest_file = max(h5_files, key=os.path.getctime)
+                try:
+                    with h5py.File(latest_file, "r") as f:
+                        # Read data arrays
+                        pressure_a_data = f["data/pressure_a"][:]
+                        pressure_b_data = f["data/pressure_b"][:]
+                        timestamp_data = f["data/timestamp"][:]
+                        
+                        # Convert to Python lists for JSON serialization
+                        chart_data["pressure_a"] = [float(x) for x in pressure_a_data]
+                        chart_data["pressure_b"] = [float(x) for x in pressure_b_data]
+                        chart_data["timestamp"] = [float(x) for x in timestamp_data]
+                        
+                        print(f"DEBUG: Loaded {len(chart_data['pressure_a'])} samples from {latest_file}")
+                        print(f"DEBUG: Pressure A range: {min(chart_data['pressure_a'])}-{max(chart_data['pressure_a'])}")
+                        print(f"DEBUG: Timestamp range: {min(chart_data['timestamp'])}-{max(chart_data['timestamp'])}")
+                        
+                        # Convert timestamps from milliseconds to seconds for chart
+                        if chart_data["timestamp"]:
+                            # Check if timestamps are in milliseconds (large numbers)
+                            if max(chart_data["timestamp"]) > 100000:
+                                # Convert to seconds and normalize to start at 0
+                                start_time = min(chart_data["timestamp"]) / 1000
+                                chart_data["timestamp"] = [(t/1000) - start_time for t in chart_data["timestamp"]]
+                            else:
+                                # Already in seconds, normalize to start at 0  
+                                start_time = min(chart_data["timestamp"])
+                                chart_data["timestamp"] = [t - start_time for t in chart_data["timestamp"]]
+                        
+                        # Create metadata from H5 file
+                        if "metadata" in f:
+                            try:
+                                order_id_data = f["metadata/order_id"][()]
+                                if isinstance(order_id_data, bytes):
+                                    order_id_data = order_id_data.decode('utf-8')
+                                samples = f["metadata/samples"][()]
+                                saved_at_data = f["metadata/saved_at"][()]
+                                if isinstance(saved_at_data, bytes):
+                                    saved_at_data = saved_at_data.decode('utf-8')
+                                
+                                # Calculate test metrics
+                                pa_avg = sum(chart_data["pressure_a"]) / len(chart_data["pressure_a"])
+                                pb_avg = sum(chart_data["pressure_b"]) / len(chart_data["pressure_b"])
+                                max_diff = max(abs(a-b) for a,b in zip(chart_data["pressure_a"], chart_data["pressure_b"]))
+                                
+                                meta = {
+                                    "order_id": order_id_data,
+                                    "samples": int(samples),
+                                    "saved_at": saved_at_data,
+                                    "set_pressure": 70.0,
+                                    "avg_pressure_a": round(pa_avg, 2),
+                                    "avg_pressure_b": round(pb_avg, 2),
+                                    "max_leak_pressure": round(max_diff, 2),
+                                    "cycle_count": 1,
+                                    "test_time": round(max(chart_data["timestamp"]) - min(chart_data["timestamp"]), 1),
+                                    "test_pass_fail": 1 if max_diff < 5 else 0
+                                }
+                            except:
+                                meta = {"samples": len(chart_data["pressure_a"]), "message": "Test data found"}
+                        else:
+                            meta = {"samples": len(chart_data["pressure_a"]), "message": "Test data found"}
+                except Exception as e:
+                    meta = {"message": f"Error reading test file: {str(e)}"}
+    
+    # If still no test data found
+    if not meta or (not chart_data["timestamp"] and "message" not in meta):
+        meta = {"message": "No test data available for this order"}
+        
     return render_template("details.html", order=order, meta=meta, chart_data=chart_data)
 
 @app.route("/email_preview/<order_id>")
