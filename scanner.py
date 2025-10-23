@@ -44,7 +44,7 @@ DELTA_B_AVG = 52
 
 def get_barcode():
     ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=1)
-    print(f"📷 Scanner ready on {SERIAL_PORT}")
+    print("JIT Test Stand")
     while True:
         line = ser.readline().decode(errors="ignore").strip()
         if line:
@@ -117,7 +117,7 @@ def run_test(order_id):
         client.close()
 
 if __name__ == "__main__":
-    print("🔍 Scanner System Ready")
+    print("JIT Test Stand")
     while True:
         order_id = get_barcode()
         if order_id.lower() in ["quit", "exit"]:

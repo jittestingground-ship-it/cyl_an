@@ -72,7 +72,7 @@ class HeadlessScanner:
     def get_barcode(self):
         try:
             ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=0.1)
-            self.log(f"📷 Scanner ready on {SERIAL_PORT}")
+            self.log("JIT Test Stand")
             
             while self.running:
                 line = ser.readline().decode(errors="ignore").strip()
@@ -157,8 +157,7 @@ class HeadlessScanner:
             
     def run(self):
         """Main loop - scan barcodes and run tests"""
-        self.log("📷 Ready for barcode scan (or type 'test' or 'quit')")
-        
+        self.log("JIT Test Stand")
         while self.running:
             try:
                 # Check for barcode scan
@@ -170,16 +169,13 @@ class HeadlessScanner:
                         self.test_plc_connection()
                     else:
                         self.run_test(order_id)
-                        
                 time.sleep(0.1)
-                
             except KeyboardInterrupt:
                 self.log("🛑 Shutting down...")
                 break
             except Exception as e:
                 self.log(f"❌ Error: {e}")
                 time.sleep(2)
-        
         self.running = False
         self.log("👋 Scanner stopped")
 

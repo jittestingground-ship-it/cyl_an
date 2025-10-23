@@ -114,10 +114,10 @@ class ScannerGUI:
         """Update PLC status indicator"""
         if connected:
             self.root.after(0, lambda: self.status_light.config(fg="green"))
-            self.root.after(0, lambda: self.plc_text.config(text=status_text, fg="lightgreen"))
+            self.root.after(0, lambda: self.plc_text.config(text="Connected", fg="lightgreen"))
         else:
             self.root.after(0, lambda: self.status_light.config(fg="red"))
-            self.root.after(0, lambda: self.plc_text.config(text=status_text, fg="lightcoral"))
+            self.root.after(0, lambda: self.plc_text.config(text="Disconnected", fg="lightcoral"))
             if error_msg:
                 self.log(f"❌ PLC Error: {error_msg}")
     
@@ -140,13 +140,13 @@ class ScannerGUI:
                                 pa, pb = rr.registers[0], rr.registers[1]
                                 status_detail = f"{status} | P_A:{pa} P_B:{pb}"
                                 # Update main status with live pressure readings
-                                self.update_status(f"� Ready for Scan | {status}")
+                                self.update_status("JIT Test Stand")
                             else:
                                 status_detail = f"{status} | Pressure: N/A"
-                                self.update_status(f"📷 Ready for Scan | {status}")
+                                self.update_status("JIT Test Stand")
                         except:
                             status_detail = status
-                            self.update_status(f"📷 Ready for Scan | {status}")
+                            self.update_status("JIT Test Stand")
                             
                         self.update_plc_status(True, status_detail)
                         # Don't print debug info since status is now in main display
@@ -168,7 +168,7 @@ class ScannerGUI:
         try:
             ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=0.1)  # Short timeout
             self.log(f"Scanner ready on {SERIAL_PORT}")
-            self.update_status("📷 Ready for Scan")
+            self.update_status("JIT Test Stand")
             
             while self.running:
                 line = ser.readline().decode(errors="ignore").strip()
@@ -237,10 +237,7 @@ class ScannerGUI:
                     
                     # Live status updates every 0.5 seconds
                     if time.time() - last_update_time > 0.5:
-                        pa_val = rr.registers[0]
-                        pb_val = rr.registers[1] 
-                        elapsed_time = time.time() - test_start_time
-                        self.log(f"📊 Testing: P_A={pa_val} P_B={pb_val} [{sample_count} samples] {elapsed_time:.1f}s")
+                        # Suppress raw numeric data; only update time
                         last_update_time = time.time()
                 else:
                     pressure_a.append(-1)
@@ -357,8 +354,7 @@ class ScannerGUI:
                 order_id = self.get_barcode()
                 if order_id and order_id.lower() not in ["quit", "exit"]:
                     self.run_test(order_id)
-                    time.sleep(1)
-                    self.update_status("📷 Ready for Scan")
+                    self.update_status("JIT Test Stand")
             except Exception as e:
                 self.log(f"❌ Error: {e}")
                 time.sleep(2)

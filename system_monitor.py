@@ -7,7 +7,7 @@ PROCESS_LABELS = [
     "Excel Host Ready",
     "Virtual Environment Started",
     "Dashboard Running",
-    "Scanner Ready",
+    "JIT Test Stand",
     "Testing",
     "Test Result Recorded",
     "Dashboard Updated",
