@@ -7,16 +7,17 @@ PROCESS_LABELS = [
     "Excel Host Ready",
     "Virtual Environment Started",
     "Dashboard Running",
-    "JIT Test Stand",
+    "Scanner Running",
     "Testing",
     "Test Result Recorded",
     "Dashboard Updated",
     "Building Email",
+    "Email ON/OFF",
     "Email Sent"
 ]
 
 class SystemMonitor:
-    def __init__(self, width=250, height=420):
+    def __init__(self, width=250, height=460):
         self.root = tk.Tk()
         self.root.title("System Monitor")
         self.root.geometry(f"{width}x{height}+50+200")  # Centered height
@@ -29,28 +30,47 @@ class SystemMonitor:
         self.processes = []
         self.startup_step = 0
         self.startup_time = time.time()
+        self.email_on = False
         for i, label_text in enumerate(PROCESS_LABELS):
             lab = tk.Label(self.frame, text=label_text, font=("Arial", 8, "bold"), fg="#000042",
                            bg='#e5e5e5', anchor="center", wraplength=120, relief="solid", bd=1)
             lab.grid(row=i, column=0, sticky="nsew", padx=2, pady=2)
-            
+
             dot_frame = tk.Frame(self.frame, bg='#e5e5e5', relief="solid", bd=1)
             dot_frame.grid(row=i, column=1, sticky="nsew", padx=2, pady=2)
             dot = tk.Canvas(dot_frame, width=20, height=20, bg='#e5e5e5', highlightthickness=0)
-            dot.create_oval(6, 6, 14, 14, fill="#cccccc", tags="circle")
+            if label_text == "Email ON/OFF":
+                dot.create_oval(6, 6, 14, 14, fill="red", tags="circle")
+            else:
+                dot.create_oval(6, 6, 14, 14, fill="#cccccc", tags="circle")
             dot.pack(expand=True)
-            
+
             self.labels.append(lab)
             self.dots.append(dot)
         self.frame.grid_columnconfigure(0, weight=1)
         self.frame.grid_columnconfigure(1, weight=1)
         for i in range(len(PROCESS_LABELS)):
             self.frame.grid_rowconfigure(i, weight=1)
+
+        # Add Email ON/OFF button below the columns
+        self.email_btn = tk.Button(self.root, text="Email ON / OFF", command=self.toggle_email, font=("Arial", 10, "bold"), bg="#dddddd")
+        self.email_btn.pack(pady=8)
+
         self.root.after(2000, self._refresh)
 
+    def toggle_email(self):
+        # Toggle the email_on state and update the dot color
+        self.email_on = not self.email_on
+        idx = PROCESS_LABELS.index("Email ON/OFF")
+        color = "green" if self.email_on else "red"
+        self.dots[idx].itemconfig("circle", fill=color)
+
     def mark_complete(self, index):
-        """Turn dot green for process at index."""
+        """Turn dot green for process at index (except Email ON/OFF, which is controlled by toggle)."""
         if 0 <= index < len(self.dots):
+            if PROCESS_LABELS[index] == "Email ON/OFF":
+                # Don't auto-mark, handled by toggle
+                return
             self.dots[index].itemconfig("circle", fill="green")
             self.status[index] = True
 

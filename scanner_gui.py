@@ -106,18 +106,18 @@ class ScannerGUI:
     def update_status(self, status):
         # Thread-safe GUI update
         self.root.after(0, lambda: self._update_status(status))
-        
+
     def _update_status(self, status):
         self.status_label.config(text=status)
-    
+
     def update_plc_status(self, connected, status_text, error_msg=None):
         """Update PLC status indicator"""
         if connected:
             self.root.after(0, lambda: self.status_light.config(fg="green"))
-            self.root.after(0, lambda: self.plc_text.config(text="Connected", fg="lightgreen"))
+            self.root.after(0, lambda: self.plc_text.config(text=status_text, fg="lightgreen"))
         else:
             self.root.after(0, lambda: self.status_light.config(fg="red"))
-            self.root.after(0, lambda: self.plc_text.config(text="Disconnected", fg="lightcoral"))
+            self.root.after(0, lambda: self.plc_text.config(text=status_text, fg="lightcoral"))
             if error_msg:
                 self.log(f"❌ PLC Error: {error_msg}")
     
@@ -139,26 +139,27 @@ class ScannerGUI:
                             if not rr.isError():
                                 pa, pb = rr.registers[0], rr.registers[1]
                                 status_detail = f"{status} | P_A:{pa} P_B:{pb}"
-                                # Update main status with live pressure readings
-                                self.update_status("JIT Test Stand")
+                                self.update_status("Scanner Running")
                             else:
                                 status_detail = f"{status} | Pressure: N/A"
-                                self.update_status("JIT Test Stand")
+                                self.update_status("Scanner Running")
                         except:
                             status_detail = status
-                            self.update_status("JIT Test Stand")
+                            self.update_status("Scanner Running")
                             
-                        self.update_plc_status(True, status_detail)
+                        self.update_plc_status(True, "Connected")
                         # Don't print debug info since status is now in main display
                     else:
                         self.update_plc_status(False, "Read Error", "Cannot read coil data")
                         self.update_status("❌ PLC Read Error")
                     client.close()
                 else:
+                    self.log(f"[DEBUG] PLC connection failed to {PLC_IP}:{PLC_PORT}")
                     self.update_plc_status(False, "Disconnected", f"Cannot connect to {PLC_IP}:{PLC_PORT}")
                     self.update_status("❌ PLC Disconnected")
                     
             except Exception as e:
+                self.log(f"[DEBUG] Exception in monitor_plc_status: {e}")
                 self.update_plc_status(False, "Error", str(e))
                 self.update_status("❌ PLC Error")
                 
@@ -168,7 +169,7 @@ class ScannerGUI:
         try:
             ser = serial.Serial(SERIAL_PORT, SERIAL_BAUD, timeout=0.1)  # Short timeout
             self.log(f"Scanner ready on {SERIAL_PORT}")
-            self.update_status("JIT Test Stand")
+            self.update_status("Scanner Running")
             
             while self.running:
                 line = ser.readline().decode(errors="ignore").strip()
@@ -354,7 +355,7 @@ class ScannerGUI:
                 order_id = self.get_barcode()
                 if order_id and order_id.lower() not in ["quit", "exit"]:
                     self.run_test(order_id)
-                    self.update_status("JIT Test Stand")
+                    self.update_status("Scanner Running")
             except Exception as e:
                 self.log(f"❌ Error: {e}")
                 time.sleep(2)

@@ -23,7 +23,7 @@ def setup_virtual_display():
     os.environ['DISPLAY'] = ':1'
     
     time.sleep(2)  # Wait for Xvfb to start
-    print("JIT Test Stand display ready on :1")
+    print("Scanner Running display ready on :1")
     return xvfb_process
 
 if __name__ == "__main__":

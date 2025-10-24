@@ -12,12 +12,20 @@
         .info-table td, .test-table td { text-align: center; color: white; padding: 6px; }
         .info-table tr:nth-child(even), .test-table tr:nth-child(even) { background: #949697; }
         .info-table tr:nth-child(odd), .test-table tr:nth-child(odd) { background: #9E2328; }
-        .chart { width: 70%; }
+    .chart { width: 50%; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="tables">
+            <a href="{{ url_for('dashboard') }}" style="text-decoration:none;">
+                <button style="background:transparent; border:none; padding:4px 10px; cursor:pointer; margin-bottom:8px;">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="26" y1="16" x2="8" y2="16" stroke="#000042" stroke-width="4" stroke-linecap="round"/>
+                        <polyline points="14,10 8,16 14,22" fill="none" stroke="#000042" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </a>
             <div class="table-title">ORDER INFO</div>
             <table class="info-table">
                 <tr><td>Order ID</td><td>{{ order[1] }}</td></tr>

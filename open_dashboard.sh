@@ -21,13 +21,15 @@ fi
 DASHBOARD_URL="http://$IP_ADDRESS:5050"
 echo "Opening dashboard at: $DASHBOARD_URL"
 
-# Try different browser commands
-if command -v firefox >/dev/null 2>&1; then
-    firefox "$DASHBOARD_URL" &
-elif command -v chromium-browser >/dev/null 2>&1; then
+# Try different browser commands (prefer Chromium)
+if command -v chromium-browser >/dev/null 2>&1; then
     chromium-browser "$DASHBOARD_URL" &
+elif command -v chromium >/dev/null 2>&1; then
+    chromium "$DASHBOARD_URL" &
 elif command -v google-chrome >/dev/null 2>&1; then
     google-chrome "$DASHBOARD_URL" &
+elif command -v firefox >/dev/null 2>&1; then
+    firefox "$DASHBOARD_URL" &
 elif command -v xdg-open >/dev/null 2>&1; then
     xdg-open "$DASHBOARD_URL" &
 else
