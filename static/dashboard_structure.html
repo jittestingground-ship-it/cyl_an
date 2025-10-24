@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Structure Diagram</title>
+    <style>
+        body { background: #f8f8ff; font-family: monospace; color: #000042; padding: 40px; }
+        pre { background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 24px; font-size: 1.1em; line-height: 1.5; }
+        h2 { color: #9E2328; }
+    </style>
+</head>
+<body>
+    <h2>Dashboard Page Structure</h2>
+    <pre>
++------------------------------------------------------+
+|                      HEADER                          |
+|  +----------------+   +--------------------------+   |
+|  |     Logo       |   |      Page Title          |   |
+|  +----------------+   +--------------------------+   |
++------------------------------------------------------+
+
++------------------------------------------------------+
+|                  ORDERS TABLE                        |
+|  +-----------------------------------------------+   |
+|  |               Header Row                      |   |
+|  | (Order ID, Name, Email, Phone, etc.)          |   |
+|  +-----------------------------------------------+   |
+|  |               Order Row                       |   |
+|  | +----------+ +------+ +-----+ +-----+         |   |
+|  | | Order ID | | Name | | ... | | ...|          |   |
+|  | +----------+ +------+ +-----+ +-----+         |   |
+|  | +----------------+ +---------------------+    |   |
+|  | | Details Button | | Preview/Email Button |    |   |
+|  | +----------------+ +---------------------+    |   |
+|  +-----------------------------------------------+   |
+|  |                (more order rows...)           |   |
++------------------------------------------------------+
+    </pre>
+</body>
+</html>

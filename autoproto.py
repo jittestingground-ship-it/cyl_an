@@ -92,6 +92,32 @@ DEFAULT_EMAIL = "kane@jitindustries.com"
 
 app = Flask(__name__)
 
+# Route for /dashboard to serve the colored dashboard page
+@app.route("/dashboard")
+def dashboard_colored():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    orders = c.execute("SELECT * FROM orders").fetchall()
+    tests = c.execute("SELECT * FROM testing_files").fetchall()
+    conn.close()
+    # Read Excel data files and sort by timestamp (newest first)
+    excel_data = []
+    excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+    file_data = []
+    for file_path in excel_files:
+        try:
+            with open(file_path, 'r') as f:
+                data = json.load(f)
+                data['filename'] = os.path.basename(file_path)
+                filename = os.path.basename(file_path)
+                timestamp_str = filename.replace('excel_data_', '').replace('.json', '')
+                file_data.append((timestamp_str, data))
+        except:
+            pass
+    file_data.sort(key=lambda x: x[0], reverse=True)
+    excel_data = [item[1] for item in file_data]
+    return render_template("dashboard_colored.html", orders=orders, tests=tests, excel_data=excel_data)
+
 @app.route("/")
 def dashboard():
     conn = sqlite3.connect(DB_PATH)
