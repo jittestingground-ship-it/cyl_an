@@ -19,14 +19,15 @@
 
 /* ---- LIST ITEMS ---- */
 .order-list li, .test-list li {
-    padding: 6px 12px;
-    border-bottom: 1px solid #eee;
-    color: #000042;
-    display: flex;
-    justify-content: space-between;   /* keep it */
-    align-items: center;
-    font-size: 11px;
-    border: solid 1px #ffffff;
+	padding: 6px 12px;
+	border-bottom: 1px solid #eee;
+	color: #000042;
+	display: flex;
+	justify-content: space-between;   /* keep it */
+	align-items: center;
+	font-size: 11px;
+	border: solid 1px #ffffff;
+	border-radius: 4px;
 }
 
 /* NEW – give each column its own flex space and centre its text */
@@ -81,9 +82,10 @@ body {
 	max-width: 400px;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 2vh;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	min-height: 60vh;
 	background: #e5e5e5;
 	border-radius: 8px;
