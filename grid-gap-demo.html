@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Grid Gap Demo</title>
+  <style>
+    .orders-table {
+      display: grid;
+      grid-template-columns: 1.2fr 2fr 2fr 2fr 2fr 1fr 1fr;
+      column-gap: 24px;
+      row-gap: 12px;
+      background: #eee;
+      padding: 20px;
+    }
+    .orders-row {
+      display: contents;
+    }
+    .orders-cell {
+      background: #9E2328;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1em;
+    }
+    .header-row .orders-cell {
+      background: white;
+      color: #000042;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="orders-table">
+    <div class="orders-row header-row">
+      <div class="orders-cell">Order ID</div>
+      <div class="orders-cell">Name</div>
+      <div class="orders-cell">Email</div>
+      <div class="orders-cell">Phone</div>
+      <div class="orders-cell">Address</div>
+      <div class="orders-cell">Details</div>
+      <div class="orders-cell">Preview</div>
+    </div>
+    <div class="orders-row">
+      <div class="orders-cell">123</div>
+      <div class="orders-cell">Alice</div>
+      <div class="orders-cell">alice@example.com</div>
+      <div class="orders-cell">555-1234</div>
+      <div class="orders-cell">123 Main St</div>
+      <div class="orders-cell">Details</div>
+      <div class="orders-cell">Preview</div>
+    </div>
+    <div class="orders-row">
+      <div class="orders-cell">456</div>
+      <div class="orders-cell">Bob</div>
+      <div class="orders-cell">bob@example.com</div>
+      <div class="orders-cell">555-5678</div>
+      <div class="orders-cell">456 Elm St</div>
+      <div class="orders-cell">Details</div>
+      <div class="orders-cell">Preview</div>
+    </div>
+  </div>
+</body>
+</html>

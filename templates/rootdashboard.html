@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>JIT Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="/static/css/rootdashboard.css">
 </head>
 <body>
     <div class="header">
         <img src="/static/jit_logo.png" class="logo" alt="JIT Logo" />
-        <h2>jit Dashboard</h2>
+        <h2>JIT ORDERS</h2>
     </div>
     <table class="orders-table">
         <tr>
@@ -23,10 +23,10 @@
         {% for data in excel_data %}
         <tr>
             <td>{{ data.orderID }}</td>
-            <td class="fit-cell fit-name">{{ data.name }}</td>
-            <td class="fit-cell fit-email">{{ data.email }}</td>
-            <td class="fit-cell fit-phone">{{ data.phone }}</td>
-            <td class="fit-cell fit-address">{{ data.address }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.phone }}</td>
+            <td>{{ data.address }}</td>
             <td><a href="{{ url_for('details', order_id=data.orderID) }}"><button class="details-btn">Details</button></a></td>
             <td>N/A</td>
             <td><a href="{{ url_for('email_preview', order_id=data.orderID) }}"><button class="email-btn">Preview</button></a></td>
@@ -35,25 +35,15 @@
         {% for order in orders %}
         <tr>
             <td>{{ order[1] }}</td>
-            <td class="fit-cell fit-name">{{ order[2] }}</td>
-            <td class="fit-cell fit-email">{{ order[3] }}</td>
-            <td class="fit-cell fit-phone">{{ order[4] }}</td>
-            <td class="fit-cell fit-address">{{ order[5] }}</td>
+            <td>{{ order[2] }}</td>
+            <td>{{ order[3] }}</td>
+            <td>{{ order[4] }}</td>
+            <td>{{ order[5] }}</td>
             <td><a href="{{ url_for('details', order_id=order[1]) }}"><button class="details-btn">Details</button></a></td>
             <td>N/A</td>
             <td><a href="{{ url_for('email_preview', order_id=order[1]) }}"><button class="email-btn">Email</button></a></td>
         </tr>
         {% endfor %}
     </table>
-        <script src="https://unpkg.com/fitty/dist/fitty.min.js"></script>
-        <script>
-                    window.addEventListener('DOMContentLoaded', function() {
-                        fitty('.fit-cell', {
-                            minSize: 8,
-                            maxSize: 24,
-                            multiLine: true
-                        });
-                    });
-        </script>
 </body>
 </html>

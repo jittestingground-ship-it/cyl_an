@@ -149,7 +149,7 @@ def dashboard():
     file_data.sort(key=lambda x: x[0], reverse=True)
     excel_data = [item[1] for item in file_data]
     
-    return render_template("dashboard.html", orders=orders, tests=tests, excel_data=excel_data)
+    return render_template("rootdashboard.html", orders=orders, tests=tests, excel_data=excel_data)
 
 @app.route("/details/<order_id>")
 def details(order_id):

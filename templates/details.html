@@ -77,10 +77,7 @@
                     <span class="list-label">Test Pass/Fail:</span>
                     <span class="list-value">{{ meta['test_pass_fail'] }}</span>
                 </li>
-                <li>
-                    <span class="list-label">Saved At:</span>
-                    <span class="list-value">{{ meta['saved_at'] }}</span>
-                </li>
+                {# Removed Saved At row #}
                 {% endif %}
             </ul>
         </div>
@@ -93,14 +90,14 @@
                     y: JSON.parse('{{ chart_data["pressure_a"] | tojson | safe }}'),
                     mode: 'lines',
                     name: 'Pressure A',
-                    line: {color: '#9E2328'}
+                    line: {color: '#9E2328', width: 4}
                 };
                 var traceB = {
                     x: JSON.parse('{{ chart_data["timestamp"] | tojson | safe }}'),
                     y: JSON.parse('{{ chart_data["pressure_b"] | tojson | safe }}'),
                     mode: 'lines',
                     name: 'Pressure B',
-                    line: {color: '#000042'}
+                    line: {color: '#000042', width: 4}
                 };
                 var layout = {
                     title: {
@@ -125,7 +122,7 @@
                         linecolor: '#000042'
                     },
                     yaxis: {
-                        title: {text: 'Pressure (psi)', standoff: 40, font: {color: '#000042', size: 16, family: 'Arial', weight: 'bold'}},
+                        title: {text: 'Pressure (psi)', standoff: 40, font: {color: '#000042', size: 20, family: 'Arial', weight: 'bold'}},
                         range: [0, 120], dtick: 10, gridcolor: 'white',
                         tickfont: {color: '#000042', size: 14, family: 'Arial'},
                         ticks: 'outside',

@@ -1,24 +1,23 @@
-/* /*rders-table td:nth-child(2),
+.orders-table td:nth-child(2),
 .orders-table th:nth-child(2) {
 	width: 150;
 }
 
-/* Make the font size smaller for the Phone and Address cells in each order row *//*
+/* Make the font size smaller for the Phone and Address cells in each order row */
 .orders-table tr td:nth-child(4),
 /* Remove fixed font-size for Name, Phone, Address, Email cells to allow fitty.js to control it */
 
 
-/* Slightly round the left and right corners of each row *//*
+/* Slightly round the left and right corners of each row */
 .orders-row .orders-cell:first-child {
 	border-top-left-radius: 6px;
 	border-bottom-left-radius: 6px;
 }
-/*
 .orders-row .orders-cell:last-child {
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
 }
-/* Round the edges of each row *//*
+/* Round the edges of each row */
 .orders-row .orders-cell:first-child {
 	border-top-left-radius: 12px;
 	border-bottom-left-radius: 12px;
@@ -27,35 +26,38 @@
 	border-top-right-radius: 12px;
 	border-bottom-right-radius: 12px;
 }
-/* 1. Body *//*
+/* 1. Body */
 body {
 	background: #e5e5e5;
 	font-family: Arial;
 	color: #000042;
 }
 
-/* 2. Header *//*
+/* 2. Header */
 .header {
 	background: white;
 	padding: 10px 20px;
 	display: flex;
 	align-items: center;
     height:13vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;
 
 }
 
-/* 3. Logo *//*
+/* 3. Logo */
 .logo {
-	width: 40px;
+	width: 29%;
 	margin-right: 15px;
 }
 
-/* 4. Orders Table *//*
+/* 4. Orders Table */
 .orders-table {
 	width: 90%;
-	min-width: 320px;
+	min-width: 20px;
 	max-width: 1200px;
-	margin-top: 30px;
+	margin-top: 100px;
 	border-collapse: separate;
 	border-spacing: 0 5px;
 	table-layout: auto;
@@ -66,13 +68,13 @@ body {
     height: 11px;
 }
 
-/* 5. Orders Table Header (th) *//*
+/* 5. Orders Table Header (th) */
 .orders-table th {
 	background: white;
 	color: #000042;
 	/*border-radius: 0 0 0 0;*\
 	
-	text-align: center; /* <-- Center header text *//*
+	text-align: center; /* <-- Center header text */
     height: 5vh;
 }
 
@@ -86,7 +88,7 @@ body {
   border-bottom-right-radius: 6px;
 }
 
-/* 6. Orders Table Data (td) *//*
+/* 6. Orders Table Data (td) */
 .orders-table td {
 	background: #9E2328;
 	color: white;
@@ -97,7 +99,7 @@ body {
 	border: solid 1px #ffffff;
 }
 
-/* 7. Details Button *//*
+/* 7. Details Button */
 .details-btn {
 	background: #e5e5e5;
 	color: #000042;
@@ -107,7 +109,7 @@ body {
 	cursor: pointer;
 }
 
-/* 8. Email Button *//*
+/* 8. Email Button */
 .email-btn {
 	background: #9E2328;
 	color: white;
@@ -118,7 +120,7 @@ body {
 	margin-left: 8px;
 }
 
-/* 9. Email Header *//*
+/* 9. Email Header */
 .email-header {
 	color: green;
-} */
+}
