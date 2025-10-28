@@ -3,48 +3,23 @@
 <head>
     <title>Order Details</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/details.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/report.css') }}">
 </head>
 <body>
     <div class="container">
         <div class="tables">
-            <a href="{{ url_for('report', order_id=order[1]) }}" style="text-decoration:none;">
-                <button style="background:#9E2328; color:#000042; border:none; border-radius:6px; padding:8px 24px; font-size:1.1em; font-weight:bold; margin-bottom:16px; margin-top:8px; cursor:pointer;">
-                    View Order Report
-                </button>
-            </a>
-            <a href="{{ url_for('dashboard') }}" style="text-decoration:none;">
-                <button style="background:transparent; border:none; padding:4px 10px; cursor:pointer; margin-bottom:8px;">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="26" y1="16" x2="8" y2="16" stroke="#000042" stroke-width="4" stroke-linecap="round"/>
-                        <polyline points="14,10 8,16 14,22" fill="none" stroke="#000042" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </a>
-            <div class="table-title">ORDER INFO</div>
+            <div class="table-title"></div>
             <ul class="order-list">
                 <li>
-                    <span class="list-label">Order ID:</span>
+                    <span class="list-label">ORDER ID</span>
                     <span class="list-value">{{ order[1] }}</span>
                 </li>
                 <li>
-                    <span class="list-label">Name:</span>
+                    <span class="list-label">CUSTOMER</span>
                     <span class="list-value">{{ order[2] }}</span>
-                </li>
-                <li>
-                    <span class="list-label">Email:</span>
-                    <span class="list-value">{{ order[3] }}</span>
-                </li>
-                <li>
-                    <span class="list-label">Phone:</span>
-                    <span class="list-value">{{ order[4] }}</span>
-                </li>
-                <li>
-                    <span class="list-label">Address:</span>
-                    <span class="list-value">{{ order[5] }}</span>
-                </li>
+            
             </ul>
-            <div class="table-title">TEST RESULTS</div>
+            <div class="table-title">Test Data</div>
             <ul class="test-list">
                 {% if meta.get('message') %}
                 <li><span class="list-label">{{ meta['message'] }}</span></li>
