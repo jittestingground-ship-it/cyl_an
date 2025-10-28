@@ -1,70 +1,117 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+h1, h2, h3, p {
+	margin-block-start: 0;
+	margin-block-end: 0;
+}
+
+.tables-wrapper, .chart-wrapper {
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.tables-wrapper {
+		background: transparent;
+	border-radius: 8px;
+	padding: 0.3vw 0.5vw; /* reduced padding for better fit */
+	align-self: flex-end;
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+}
+
+.tables, .chart, .tables-wrapper, .chart-wrapper {
+    min-height: 0;          /* ✅ allows full flex shrink */
+    height: auto;
+    max-height: none;
+}
+
+.chart-wrapper {
+		background: transparent;
+	border-radius: 8px;
+	padding: 0.3vw 0.5vw; /* reduced padding for better fit */
+	width: 100%;
+	min-width: 10vw;
+	max-width: 100%;
+	height: auto;
+}
+
+/* Specific order info text wrapping */
 .order-list li:nth-child(2) .list-value {
 	white-space: normal;
 	word-break: break-word;
 }
+
+/* Plotly background fix */
 .js-plotly-plot .main-svg {
 	background: rgb(0, 0, 0, 0) !important;
 }
-/* Override Plotly SVG chart background color */
+
 /* Thick blue border for label column */
-.info-table td:first-child, .test-table td:first-child {
+.info-table td:first-child, 
+.test-table td:first-child {
 	border: 4px solid #0000cc;
 }
-/* List style for order and test info */
+
+/* ---- LIST STYLES ---- */
 .order-list, .test-list {
 	list-style: none;
 	padding: 0;
 	margin: 0 0 18px 0;
-	/*background: #fff;*/
 	border-radius: 8px;
-    justify-content: center;
-	
+	justify-content: center;
 }
 
-/* ---- LIST ITEMS ---- */
-.order-list li, {
-	
+/* ---- FIXED: Removed bad comma ---- */
+.order-list li {
 	text-align: center;
 	color: #000042;
 	display: flex;
-	justify-content: space-between;   /* keep it */
+	justify-content: space-between;
 	align-items: center;
 	font-size: 16px;
-	/*min-height: 30px;*/
-	background-color: orange
-	
+	background-color: orange;
 }
 
+/* Column layout inside order-list */
 .order-list .list-label,
 .order-list .list-value {
-    flex: 1 1 50%;
-    width: 50%;
-    text-align: center;
+	flex: 1 1 50%;
+	width: 50%;
+	text-align: center;
 }
 
+/* Test list items */
 .test-list li {
 	padding: 6px 12px;
 	border-bottom: 1px solid #eee;
 	color: #000042;
 	display: flex;
-	justify-content: space-between;   /* keep it */
+	justify-content: space-between;
 	align-items: center;
 	font-size: 11px;
 	border: solid 1px #ffffff;
 	border-radius: 4px;
 }
 
-/* NEW – give each column its own flex space and centre its text */
+/* Equal width + centered text for both list types */
 .list-label,
 .list-value {
-    flex: 1;               /* each column = 50% width */
-    text-align: center;    /* centre inside the column */
+	flex: 1;
+	text-align: center;
 }
 
+/* Slight spacing between first two order rows */
 .order-list li:first-child {
-	margin-bottom: 2px; /* Slightly closer spacing between Order ID and Customer row */
+	margin-bottom: 2px;
 }
 
+/* Alternating colors */
 .test-list li:nth-child(odd) {
 	background: #9E2328;
 	color: #ffffff;
@@ -75,83 +122,88 @@
 	color: #ffffff;
 }
 
-.order-list li:nth-child(odd) {
-	background: transparent;
-	color: #000042;
-}
-
+.order-list li:nth-child(odd),
 .order-list li:nth-child(even) {
 	background: transparent;
 	color: #000042;
 }
 
-
-.order-list li:last-child, .test-list li:last-child {
+/* Remove heavy bottom borders */
+.order-list li:last-child, 
+.test-list li:last-child {
 	border-bottom: none;
 }
 
+/* Bold label text */
 .list-label {
 	font-weight: bold;
 	margin-right: 12px;
-    text-align: center;
-    display: inline-block;
+	text-align: center;
+	display: inline-block;
 }
 
+/* Page body setup */
 body {
 	background: #e5e5e5;
 	font-family: Arial;
 	color: #000042;
 	width: 100vw;
-	min-height: 100vh;
+	min-height: 100dvh;   /* ✅ allows page to grow with content */
+	overflow-x: hidden;   /* prevent horizontal scroll if needed */
 }
 
+/* Allow long text wrap */
 .order-list .list-value {
-    white-space: normal;
-    word-break: break-word;
-    min-height: 40px; /* or whatever default */
+	white-space: normal;
+	word-break: break-word;
+	min-height: 40px;
 }
 
+/* Main container layout */
 .container {
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
-	gap: 2vw;
-	min-height: 100vh;
-	align-items: stretch;
+	gap: 1.5vw;                      /* slightly smaller gap for symmetry */
+	align-items: stretch;            /* ✅ allows equal column height */
+	justify-content: center;
+	height: auto;
+	min-height: calc(100dvh - 80px); /* ✅ fits on screen minus header */
+	padding: 1vh 0;
+	box-sizing: border-box;
 }
 
+/* Tables section */
 .tables {
-	flex: 0 1 340px;
-	min-width: 260px;
-	max-width: 400px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 18vh;
+	flex: 1 1 300px;                /* ✅ allows better shrink */
+	width: auto;
+	min-width: 0;
+	max-width: none;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
-	min-height: 60vh;
-	background: #e5e5e5;
+	justify-content: center;
+	align-items: center;
+	background: #e0f7fa;            /* light blue */
 	border-radius: 8px;
-	padding: 8px 0 8px 0;
+	padding: 1vw;
+	box-sizing: border-box;
+	margin-left: 2vw;
 }
 
+/* Section titles */
 .table-title {
 	color: #000042;
 	text-align: center;
-	
 	font-size: 23px;
 	margin-bottom: 12px;
-    font-weight: bold;
-	Margin-top: 35px;
-
+	font-weight: bold;
+	margin-top: 35px;
 }
 
+/* Info + test tables */
 .info-table, .test-table {
 	width: 100%;
-	/*margin-bottom: 18px;*/
-	/*border-collapse: collapse;*/
-    text-align: center;
+	text-align: center;
 }
 
 .info-table td, .test-table td {
@@ -160,61 +212,64 @@ body {
 	padding: 6px;
 	border: 2px solid #000042;
 	width: 50%;
-    
 }
 
-.container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;      /* vertical centering */
-    justify-content: center;  /* horizontal centering */
-    min-height: 100vh;
-	/*background: orange;	*/
-}
-.tables, .chart {
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-.info-table tr:nth-child(even), .test-table tr:nth-child(even) {
+/* Alternate row colors */
+.info-table tr:nth-child(even), 
+.test-table tr:nth-child(even) {
 	background: #949697;
 }
 
-.info-table tr:nth-child(odd), .test-table tr:nth-child(odd) {
+.info-table tr:nth-child(odd), 
+.test-table tr:nth-child(odd) {
 	background: #9E2328;
 }
 
+/* Chart area */
 .chart {
-	/*padding-left: 2vw;*/
-	flex: 1 1 600px;
-	min-width: 320px;
-	max-width: 900px;
-	margin-left: auto;
-	margin-right: auto;
+	flex: 1.5 1 400px;              /* ✅ flex ratio for better resizing */
+	width: auto;
+	min-width: 0;
+	max-width: 68vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	box-sizing: border-box;
-    margin-top: 7.3%; /* Increase this value to move the chart lower */
+	margin-top: 0;
+	margin-right: 2vw;
+}
+
+/* Chart visual tweaks */
+#pressure_chart {
+	width: 100%;
+	height: 100%;
+	max-height: 100%;
 }
 
 .pressure-chart {
-    background-color: red;
+	background-color: red;
 }
+
 .plot-container-plotly {
-    background: #e5e5e5; /* or any color you want */
+	background: #e5e5e5;
 }
 
-
+/* Consistent label/value layout */
 .order-list li {
-    display: flex;
-    align-items: flex-start; /* or center */
+	display: flex;
+	align-items: flex-start;
 }
+
 .order-list .list-label {
-    flex: 1 1 50%;
-    text-align: center;
-    white-space: normal;
+	flex: 1 1 50%;
+	text-align: center;
+	white-space: normal;
 }
+
 .order-list .list-value {
-    flex: 1 1 50%;
-    text-align: center;
-    white-space: normal; /* allows wrapping */
-    word-break: break-word; /* breaks long words */
+	flex: 1 1 50%;
+	text-align: center;
+	white-space: normal;
+	word-break: break-word;
 }
