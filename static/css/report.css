@@ -1,3 +1,7 @@
+.order-list li:nth-child(2) .list-value {
+	white-space: normal;
+	word-break: break-word;
+}
 .js-plotly-plot .main-svg {
 	background: rgb(0, 0, 0, 0) !important;
 }
@@ -26,7 +30,7 @@
 	justify-content: space-between;   /* keep it */
 	align-items: center;
 	font-size: 16px;
-	min-height: 40px;
+	/*min-height: 30px;*/
 	background-color: orange
 	
 }
@@ -58,7 +62,7 @@
 }
 
 .order-list li:first-child {
-    margin-bottom: 20px; /* Adjust value as needed */
+	margin-bottom: 2px; /* Slightly closer spacing between Order ID and Customer row */
 }
 
 .test-list li:nth-child(odd) {
@@ -135,11 +139,12 @@ body {
 .table-title {
 	color: #000042;
 	text-align: center;
-	font-weight: bold;
-	font-size: 18px;
+	
+	font-size: 23px;
 	margin-bottom: 12px;
     font-weight: bold;
-	Margin-top: 40px
+	Margin-top: 35px;
+
 }
 
 .info-table, .test-table {
@@ -156,6 +161,19 @@ body {
 	border: 2px solid #000042;
 	width: 50%;
     
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;      /* vertical centering */
+    justify-content: center;  /* horizontal centering */
+    min-height: 100vh;
+	/*background: orange;	*/
+}
+.tables, .chart {
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .info-table tr:nth-child(even), .test-table tr:nth-child(even) {
