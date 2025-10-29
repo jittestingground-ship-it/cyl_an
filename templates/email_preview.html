@@ -52,9 +52,29 @@
             Plotly.newPlot('email_chart', [traceA, traceB], layout, {responsive: true});
         </script>
         {% endif %}
-        <form method="post" action="{{ url_for('send_email', order_id=request.view_args['order_id']) }}">
-            <button class="btn" type="submit">Send Email</button>
-        </form>
+                <button class="btn" id="send-email-btn">Send Email</button>
+                <div id="email-status" class="status"></div>
+                <script>
+                document.getElementById('send-email-btn').onclick = function() {
+                        fetch('/send_email/{{ request.view_args["order_id"] }}', {method: 'POST'})
+                            .then(response => response.json())
+                            .then(data => {
+                                var statusDiv = document.getElementById('email-status');
+                                if (data.status) {
+                                    statusDiv.textContent = data.status;
+                                    statusDiv.className = 'status sent';
+                                } else {
+                                    statusDiv.textContent = data.error || 'Error sending email.';
+                                    statusDiv.className = 'status failed';
+                                }
+                            })
+                            .catch(err => {
+                                var statusDiv = document.getElementById('email-status');
+                                statusDiv.textContent = 'Error: ' + err;
+                                statusDiv.className = 'status failed';
+                            });
+                };
+                </script>
     </div>
 </body>
 </html>

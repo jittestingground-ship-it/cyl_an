@@ -8,6 +8,23 @@
 <body>
     <div class="container">
         <div class="tables">
+                        <button id="capture-report-btn" style="background:#2E7D32; color:#fff; border:none; border-radius:6px; padding:8px 24px; font-size:1.1em; font-weight:bold; margin-bottom:8px; margin-top:8px; cursor:pointer;">
+                                Capture Report & Preview Email
+                        </button>
+                        <script>
+                        document.getElementById('capture-report-btn').onclick = function() {
+                            fetch('/trigger_capture_report/{{ order[1] }}', {method: 'POST'})
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.status) {
+                                        alert('Report captured and saved successfully.');
+                                    } else {
+                                        alert(data.error || 'Error capturing report.');
+                                    }
+                                })
+                                .catch(err => alert('Error: ' + err));
+                        };
+                        </script>
             <a href="{{ url_for('report', order_id=order[1]) }}" style="text-decoration:none;">
                 <button style="background:#9E2328; color:#000042; border:none; border-radius:6px; padding:8px 24px; font-size:1.1em; font-weight:bold; margin-bottom:16px; margin-top:8px; cursor:pointer;">
                     View Order Report

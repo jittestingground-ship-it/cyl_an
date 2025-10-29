@@ -2,6 +2,7 @@
 
 
 import os
+import subprocess
 import sys
 import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, jsonify
@@ -512,36 +513,40 @@ TEST RESULTS SUMMARY:
     
     sender = "jitrndhost@gmail.com"
     password = "ddko ocle ezwa gsmt"
-    # Always send to default email, not customer email
     to_addr = DEFAULT_EMAIL
-    
-    subject = f"Test Results Complete - Order {order_id}"
-    body = f"""Dear {order[2] if order else 'Customer'},
-
-Your cylinder test for Order ID: {order_id} has been completed.
-
-ORDER DETAILS:
-- Order ID: {order[1] if order else order_id}
-- Customer: {order[2] if order else 'N/A'}
-- Email: {order[3] if order else 'N/A'}
-- Phone: {order[4] if order else 'N/A'}
-
-{test_results}
-
-Please contact us if you have any questions about your test results.
-
-Best regards,
-JIT Industries Test Department
-"""
-    
-    message = f"Subject: {subject}\n\n{body}"
+    subject = f"Report Image for Order {order_id}"
+    # Find the latest PNG image for this order
+    test_data_dir = "/home/kw/cyl_a/test_data"
+    img_path = None
+    if os.path.exists(test_data_dir):
+        png_files = glob.glob(f"{test_data_dir}/{order_id}*.png")
+        if png_files:
+            img_path = max(png_files, key=os.path.getctime)
+    if not img_path or not os.path.exists(img_path):
+        return jsonify({"status": "Error", "error": "Report image not found."})
+    import email, email.mime.multipart, email.mime.base, email.encoders
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.base import MIMEBase
+    from email import encoders
+    msg = MIMEMultipart()
+    msg['From'] = sender
+    msg['To'] = to_addr
+    msg['Subject'] = subject
+    msg.attach(MIMEText(f"Attached is the report image for order {order_id}.", 'plain'))
+    with open(img_path, 'rb') as f:
+        part = MIMEBase('application', 'octet-stream')
+        part.set_payload(f.read())
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', f'attachment; filename="{os.path.basename(img_path)}"')
+        msg.attach(part)
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
         server.login(sender, password)
-        server.sendmail(sender, to_addr, message)
+        server.sendmail(sender, to_addr, msg.as_string())
         server.quit()
-        return jsonify({"status": f"Email sent to {to_addr}"})
+        return jsonify({"status": f"Report image sent to {to_addr}"})
     except Exception as e:
         return jsonify({"status": "Error", "error": str(e)})
 
@@ -557,5 +562,65 @@ def store_data():
     except Exception as e:
         return jsonify({"status": "Error", "error": str(e)})
 
+
+# Endpoint to trigger only report capture (not email send)
+@app.route('/trigger_capture_report/<order_id>', methods=['POST'])
+def trigger_capture_report(order_id):
+    # Find the .h5 file for this order in autoproto_data
+    ext_drive = find_external_drive()
+    ext_path = os.path.join(ext_drive, "autoproto_data")
+    h5_path = os.path.join(ext_path, f"{order_id}_test.h5")
+    save_dir = ext_path if os.path.exists(h5_path) else os.path.dirname(os.path.abspath(__file__))
+    img_path = os.path.join(save_dir, f"{order_id}.jpg")
+
+    print(f"captured report for {order_id} in {save_dir}")
+
+    try:
+        # Call the capture_report.py script to generate the report image in the order's data dir
+        result = subprocess.run([
+            os.path.join(os.path.dirname(__file__), 'venv', 'bin', 'python'),
+            os.path.join(os.path.dirname(__file__), 'capture_report.py'),
+            order_id,
+            f'http://localhost:5050/report/{order_id}',
+            save_dir
+        ], capture_output=True, text=True)
+        if result.returncode == 0 and os.path.exists(img_path):
+            # Record image path in testing_files table
+            conn = sqlite3.connect(DB_PATH)
+            c = conn.cursor()
+            c.execute("INSERT INTO testing_files (order_id, file_path) VALUES (?, ?)", (order_id, img_path))
+            conn.commit()
+            conn.close()
+            return jsonify({'status': 'Report captured and saved.', 'image_path': img_path})
+        else:
+            return jsonify({'error': result.stderr or 'Failed to capture report.'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Endpoint to trigger report email for an order
+@app.route('/trigger_report_email/<order_id>', methods=['POST'])
+def trigger_report_email(order_id):
+    try:
+        # Call the capture_report.py script to generate and send the report image
+        result = subprocess.run([
+            os.path.join(os.path.dirname(__file__), 'venv', 'bin', 'python'),
+            os.path.join(os.path.dirname(__file__), 'capture_report.py'),
+            order_id,
+            f'http://localhost:5050/report/{order_id}'
+        ], capture_output=True, text=True)
+        if result.returncode == 0:
+            return jsonify({'status': 'Report email sent successfully.'})
+        else:
+            return jsonify({'error': result.stderr or 'Failed to send report email.'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5050)
+    import traceback
+    try:
+        app.run(host="0.0.0.0", port=5050)
+    except Exception as e:
+        # Write error flag for system monitor
+        with open("/home/kw/cyl_a/dashboard_error.flag", "w") as f:
+            f.write(f"Dashboard error: {str(e)}\n{traceback.format_exc()}")
+        raise
