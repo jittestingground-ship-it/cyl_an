@@ -341,7 +341,7 @@ import subprocess
 def trigger_capture_report(order_id):
     # Run the Playwright script for the given order ID
     result = subprocess.run(
-        ['python', 'capture_and_preview.py', order_id],
+        ['/home/kw/cyl_a/venv/bin/python', 'capture_and_preview.py', order_id],
         cwd='/home/kw/cyl_a',
         capture_output=True,
         text=True
