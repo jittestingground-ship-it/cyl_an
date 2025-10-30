@@ -75,7 +75,7 @@ h1, h2, h3, p {
 	justify-content: space-between;
 	align-items: center;
 	font-size: 16px;
-	background-color: orange;
+	/* background-color: orange; */
 }
 
 /* Column layout inside order-list */
@@ -183,7 +183,7 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background: #e0f7fa;            /* light blue */
+	background: transparent;            /* light blue */
 	border-radius: 8px;
 	padding: 1vw;
 	box-sizing: border-box;
@@ -197,7 +197,7 @@ body {
 	font-size: 23px;
 	margin-bottom: 12px;
 	font-weight: bold;
-	margin-top: 35px;
+	margin-top: 25px;
 }
 
 /* Info + test tables */
@@ -236,7 +236,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	box-sizing: border-box;
-	margin-top: 0;
+	margin-top: 40px;
 	margin-right: 2vw;
 }
 
@@ -272,4 +272,12 @@ body {
 	text-align: center;
 	white-space: normal;
 	word-break: break-word;
+}
+h1 {
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+.tables-wrapper {
+  margin-top: -45px;
 }
