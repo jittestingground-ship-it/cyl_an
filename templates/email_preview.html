@@ -25,6 +25,7 @@
             </svg>
         </button>
     </a>
+    <img src="/report_image/{{ request.view_args['order_id'] }}.png" alt="Report Image" style="width:100%;max-width:600px;object-fit:contain;margin-bottom:20px;">
         <div class="subject">{{ subject }}</div>
         <div class="body">{{ body }}</div>
         {% if chart_data and chart_data["timestamp"] %}

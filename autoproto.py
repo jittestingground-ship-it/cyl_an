@@ -1,12 +1,9 @@
-
-
-
 import os
 import subprocess
 import sys
 import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-import h5py
+import h5py  # Ensure h5py is installed: pip install h5py
 import random
 import smtplib
 import json
@@ -49,40 +46,12 @@ c.execute('''CREATE TABLE IF NOT EXISTS testing_files (
 conn.commit()
 conn.close()
 
-def generate_fake_test(order_id):
-    h5_path = os.path.join(EXT_PATH, f"{order_id}_test.h5")
-    with h5py.File(h5_path, "w") as f:
-        grp_data = f.create_group("data")
-        times = [i*0.5 for i in range(141)]
-        pres_a = [random.uniform(30, 70) for _ in times]
-        pres_b = [random.uniform(28, 68) for _ in times]
-        grp_data.create_dataset("pressure_a", data=pres_a)
-        grp_data.create_dataset("pressure_b", data=pres_b)
-        grp_data.create_dataset("timestamp", data=times)
-        grp_meta = f.create_group("metadata")
-        grp_meta.attrs["order_id"] = order_id
-        grp_meta.attrs["set_pressure"] = 70.0
-        grp_meta.attrs["avg_pressure_a"] = sum(pres_a)/len(pres_a)
-        grp_meta.attrs["avg_pressure_b"] = sum(pres_b)/len(pres_b)
-        grp_meta.attrs["max_leak_pressure"] = max(abs(a-b) for a,b in zip(pres_a,pres_b))
-        grp_meta.attrs["cycle_count"] = 3
-        grp_meta.attrs["test_time"] = 70.5
-        grp_meta.attrs["samples"] = len(times)
-        grp_meta.attrs["test_pass_fail"] = 1
-        grp_meta.attrs["saved_at"] = "2025-10-08T15:30:22"
-    return h5_path
 
 def add_fake_order(order_id):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute("INSERT OR IGNORE INTO orders (orderID, name, email, phone, address) VALUES (?, ?, ?, ?, ?)",
               (order_id, "Kane Industries", "kane@jitindustries.com", "555-1234", "123 Main St"))
-    conn.commit()
-    conn.close()
-    h5_path = generate_fake_test(order_id)
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("INSERT INTO testing_files (order_id, file_path) VALUES (?, ?)", (order_id, h5_path))
     conn.commit()
     conn.close()
 
@@ -366,99 +335,35 @@ def report(order_id):
         meta = {"message": "No test data available for this order"}
     return render_template("report.html", order=order, meta=meta, chart_data=chart_data)
 
+import subprocess
+
+@app.route('/trigger_capture_report/<order_id>', methods=['POST'])
+def trigger_capture_report(order_id):
+    # Run the Playwright script for the given order ID
+    result = subprocess.run(
+        ['python', 'capture_and_preview.py', order_id],
+        cwd='/home/kw/cyl_a',
+        capture_output=True,
+        text=True
+    )
+    # You can check result.returncode and result.stdout/stderr if needed
+    return jsonify({'status': True, 'message': 'Image processed successfully'})
+
+@app.route('/report_image/<filename>')
+def serve_report_image(filename):
+    from flask import send_from_directory
+    import os
+    from find_external_drive import find_external_drive
+    ext_drive = find_external_drive()
+    image_dir = os.path.join(ext_drive, "report_images")
+    return send_from_directory(image_dir, filename)
 
 
-
-
-
-@app.route("/email_preview/<order_id>")
+@app.route('/email_preview/<order_id>')
 def email_preview(order_id):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    order = c.execute("SELECT * FROM orders WHERE orderID=?", (order_id,)).fetchone()
-    test_file = c.execute("SELECT file_path FROM testing_files WHERE order_id=?", (order_id,)).fetchone()
-    conn.close()
-    
-    # If order not in database, check Excel data
-    if not order:
-        excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
-        for file_path in excel_files:
-            try:
-                with open(file_path, 'r') as f:
-                    data = json.load(f)
-                    if data.get('orderID') == order_id:
-                        order = (None, data.get('orderID'), data.get('name'), 
-                                data.get('email'), data.get('phone'), data.get('address'))
-                        break
-            except:
-                pass
-    
-    # Look for test data in test_data folder
-    test_results = ""
-    test_data_dir = "/home/kw/cyl_a/test_data"
-    if os.path.exists(test_data_dir):
-        h5_files = glob.glob(f"{test_data_dir}/{order_id}_*.h5")
-        if h5_files:
-            latest_file = max(h5_files, key=os.path.getctime)
-            try:
-                with h5py.File(latest_file, "r") as f:
-                    pressure_a_data = f["data/pressure_a"][:]
-                    pressure_b_data = f["data/pressure_b"][:]
-                    
-                    # Calculate test metrics
-                    pa_avg = sum(pressure_a_data) / len(pressure_a_data)
-                    pb_avg = sum(pressure_b_data) / len(pressure_b_data)
-                    max_diff = max(abs(a-b) for a,b in zip(pressure_a_data, pressure_b_data))
-                    samples = len(pressure_a_data)
-                    
-                    test_results = f"""
-TEST RESULTS SUMMARY:
-- Samples Collected: {samples}
-- Average Pressure A: {pa_avg:.2f} PSI
-- Average Pressure B: {pb_avg:.2f} PSI
-- Maximum Pressure Difference: {max_diff:.2f} PSI
-- Test Status: {"PASS" if max_diff < 5 else "FAIL"}
-"""
-            except:
-                test_results = "Test data file found but could not be read."
-        else:
-            test_results = "No test data available for this order."
-    
-    body = f"""Dear {order[2] if order else 'Customer'},
+    return render_template('email_preview.html', order_id=order_id)
 
-Your cylinder test for Order ID: {order_id} has been completed.
 
-ORDER DETAILS:
-- Order ID: {order[1] if order else order_id}
-- Customer: {order[2] if order else 'N/A'}
-- Email: {order[3] if order else 'N/A'}
-- Phone: {order[4] if order else 'N/A'}
-
-{test_results}
-
-Please contact us if you have any questions about your test results.
-
-Best regards,
-JIT Industries Test Department
-"""
-    
-    subject = f"Test Results Complete - Order {order_id}"
-    
-    # Get chart data for email preview
-    chart_data = {"pressure_a": [], "pressure_b": [], "timestamp": []}
-    if os.path.exists(test_data_dir):
-        h5_files = glob.glob(f"{test_data_dir}/{order_id}_*.h5")
-        if h5_files:
-            latest_file = max(h5_files, key=os.path.getctime)
-            try:
-                with h5py.File(latest_file, "r") as f:
-                    chart_data["pressure_a"] = [float(x) for x in f["data/pressure_a"][:]]
-                    chart_data["pressure_b"] = [float(x) for x in f["data/pressure_b"][:]]
-                    chart_data["timestamp"] = [float(x) for x in f["data/timestamp"][:]]
-            except:
-                pass
-    
-    return render_template("email_preview.html", subject=subject, body=body, test_file=latest_file if 'latest_file' in locals() else None, chart_data=chart_data)
 
 @app.route("/send_email/<order_id>", methods=["POST"])
 def send_email(order_id):
@@ -563,64 +468,5 @@ def store_data():
         return jsonify({"status": "Error", "error": str(e)})
 
 
-# Endpoint to trigger only report capture (not email send)
-@app.route('/trigger_capture_report/<order_id>', methods=['POST'])
-def trigger_capture_report(order_id):
-    # Find the .h5 file for this order in autoproto_data
-    ext_drive = find_external_drive()
-    ext_path = os.path.join(ext_drive, "autoproto_data")
-    h5_path = os.path.join(ext_path, f"{order_id}_test.h5")
-    save_dir = ext_path if os.path.exists(h5_path) else os.path.dirname(os.path.abspath(__file__))
-    img_path = os.path.join(save_dir, f"{order_id}.jpg")
-
-    print(f"captured report for {order_id} in {save_dir}")
-
-    try:
-        # Call the capture_report.py script to generate the report image in the order's data dir
-        result = subprocess.run([
-            os.path.join(os.path.dirname(__file__), 'venv', 'bin', 'python'),
-            os.path.join(os.path.dirname(__file__), 'capture_report.py'),
-            order_id,
-            f'http://localhost:5050/report/{order_id}',
-            save_dir
-        ], capture_output=True, text=True)
-        if result.returncode == 0 and os.path.exists(img_path):
-            # Record image path in testing_files table
-            conn = sqlite3.connect(DB_PATH)
-            c = conn.cursor()
-            c.execute("INSERT INTO testing_files (order_id, file_path) VALUES (?, ?)", (order_id, img_path))
-            conn.commit()
-            conn.close()
-            return jsonify({'status': 'Report captured and saved.', 'image_path': img_path})
-        else:
-            return jsonify({'error': result.stderr or 'Failed to capture report.'}), 500
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-# Endpoint to trigger report email for an order
-@app.route('/trigger_report_email/<order_id>', methods=['POST'])
-def trigger_report_email(order_id):
-    try:
-        # Call the capture_report.py script to generate and send the report image
-        result = subprocess.run([
-            os.path.join(os.path.dirname(__file__), 'venv', 'bin', 'python'),
-            os.path.join(os.path.dirname(__file__), 'capture_report.py'),
-            order_id,
-            f'http://localhost:5050/report/{order_id}'
-        ], capture_output=True, text=True)
-        if result.returncode == 0:
-            return jsonify({'status': 'Report email sent successfully.'})
-        else:
-            return jsonify({'error': result.stderr or 'Failed to send report email.'}), 500
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
 if __name__ == "__main__":
-    import traceback
-    try:
-        app.run(host="0.0.0.0", port=5050)
-    except Exception as e:
-        # Write error flag for system monitor
-        with open("/home/kw/cyl_a/dashboard_error.flag", "w") as f:
-            f.write(f"Dashboard error: {str(e)}\n{traceback.format_exc()}")
-        raise
+    app.run(host="0.0.0.0", port=5050, debug=True)

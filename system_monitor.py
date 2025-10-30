@@ -85,19 +85,62 @@ class SystemMonitor:
                 os.remove('/home/kw/cyl_a/test_complete.flag')
         
         # Startup sequence with delays
-        if self.startup_step == 0 and elapsed > 2:  # Excel Host Ready
+        # Step 0: Excel Host Ready
+        if self.startup_step == 0 and elapsed > 2:
             self.mark_complete(0)
             self.startup_step = 1
-        elif self.startup_step == 1 and elapsed > 4:  # Virtual Environment Started
-            self.mark_complete(1)
-            self.startup_step = 2
-        elif self.startup_step == 2 and elapsed > 6:  # Dashboard Running
-            try:
-                p = subprocess.Popen(['./venv/bin/python', 'autoproto.py'], cwd='/home/kw/cyl_a')
-                self.processes.append(p)
-                self.mark_complete(2)
-            except:
-                pass
+
+        # Step 1: Virtual Environment Started (only after Excel receiver is running and monitor is up)
+        elif self.startup_step == 1:
+            # Check if Excel receiver is running on port 5000
+            import socket
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            result = sock.connect_ex(('localhost', 5000))
+            sock.close()
+            if result == 0:
+                # Excel receiver is running, now start venv Python (autoproto.py)
+                import psutil
+                venv_python = '/home/kw/cyl_a/venv/bin/python'
+                found_venv = False
+                for proc in psutil.process_iter(['exe', 'cmdline']):
+                    try:
+                        if proc.info['exe'] and proc.info['exe'].endswith('python') and proc.info['exe'] == venv_python:
+                            found_venv = True
+                            break
+                    except Exception:
+                        continue
+                idx = PROCESS_LABELS.index("Virtual Environment Started")
+                if not found_venv:
+                    try:
+                        p = subprocess.Popen([venv_python, 'autoproto.py'], cwd='/home/kw/cyl_a')
+                        self.processes.append(p)
+                    except:
+                        pass
+                # Check again for venv python process
+                found_venv = False
+                for proc in psutil.process_iter(['exe', 'cmdline']):
+                    try:
+                        if proc.info['exe'] and proc.info['exe'].endswith('python') and proc.info['exe'] == venv_python:
+                            found_venv = True
+                            break
+                    except Exception:
+                        continue
+                if found_venv:
+                    self.dots[idx].itemconfig("circle", fill="green")
+                    self.status[idx] = True
+                    self.startup_step = 2
+                elif elapsed > 8:
+                    self.dots[idx].itemconfig("circle", fill="red")
+                    self.status[idx] = False
+                    self.startup_step = 2
+            else:
+                # Excel receiver not running yet, keep dot transparent/gray
+                idx = PROCESS_LABELS.index("Virtual Environment Started")
+                self.dots[idx].itemconfig("circle", fill="#cccccc")
+
+        # Step 2: Dashboard Running
+        elif self.startup_step == 2 and elapsed > 10:
+            self.mark_complete(2)
             self.startup_step = 3
         elif self.startup_step == 3 and elapsed > 8:  # Scanner Ready
             try:
