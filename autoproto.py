@@ -420,14 +420,12 @@ TEST RESULTS SUMMARY:
     password = "ddko ocle ezwa gsmt"
     to_addr = DEFAULT_EMAIL
     subject = f"Report Image for Order {order_id}"
-    # Find the latest PNG image for this order
-    test_data_dir = "/home/kw/cyl_a/test_data"
-    img_path = None
-    if os.path.exists(test_data_dir):
-        png_files = glob.glob(f"{test_data_dir}/{order_id}*.png")
-        if png_files:
-            img_path = max(png_files, key=os.path.getctime)
-    if not img_path or not os.path.exists(img_path):
+    # Find the report image for this order in the external drive
+    from find_external_drive import find_external_drive
+    ext_drive = find_external_drive()
+    image_dir = os.path.join(ext_drive, "report_images")
+    img_path = os.path.join(image_dir, f"{order_id}.png")
+    if not os.path.exists(img_path):
         return jsonify({"status": "Error", "error": "Report image not found."})
     import email, email.mime.multipart, email.mime.base, email.encoders
     from email.mime.text import MIMEText
