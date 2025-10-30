@@ -1,3 +1,4 @@
+
 html, body {
 	height: 100%;
 	margin: 0;
@@ -16,7 +17,7 @@ h1, h2, h3, p {
 }
 
 .tables-wrapper {
-		background: transparent;
+	background: transparent;
 	border-radius: 8px;
 	padding: 0.3vw 0.5vw; /* reduced padding for better fit */
 	align-self: flex-end;
@@ -32,7 +33,7 @@ h1, h2, h3, p {
 }
 
 .chart-wrapper {
-		background: transparent;
+	background: transparent;
 	border-radius: 8px;
 	padding: 0.3vw 0.5vw; /* reduced padding for better fit */
 	width: 100%;
@@ -59,13 +60,27 @@ h1, h2, h3, p {
 }
 
 /* ---- LIST STYLES ---- */
-.order-list, .test-list {
+.order-list {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 18px 0;
+	border-radius: 8px;
+	justify-content: center;
+	width: 100%;
+	/* background-color: purple; */
+}
+
+
+
+.test-list {
 	list-style: none;
 	padding: 0;
 	margin: 0 0 18px 0;
 	border-radius: 8px;
 	justify-content: center;
 }
+
+
 
 /* ---- FIXED: Removed bad comma ---- */
 .order-list li {
@@ -75,15 +90,27 @@ h1, h2, h3, p {
 	justify-content: space-between;
 	align-items: center;
 	font-size: 16px;
-	/* background-color: orange; */
+	/* background-color: blue; */
+	width: 100%
 }
 
 /* Column layout inside order-list */
 .order-list .list-label,
 .order-list .list-value {
 	flex: 1 1 50%;
-	width: 50%;
+	width: 100%;
 	text-align: center;
+}
+
+.order-list .list-label {
+	white-space: normal;
+	/*background-color: lightgreen; */
+
+}
+
+.order-list .list-value {
+	white-space: normal;
+	/*background-color: lightblue;*/
 }
 
 /* Test list items */
@@ -94,9 +121,10 @@ h1, h2, h3, p {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	font-size: 11px;
+	font-size: 16px;
 	border: solid 1px #ffffff;
 	border-radius: 4px;
+	
 }
 
 /* Equal width + centered text for both list types */
@@ -124,7 +152,7 @@ h1, h2, h3, p {
 
 .order-list li:nth-child(odd),
 .order-list li:nth-child(even) {
-	background: transparent;
+	/*background: neon green;*/
 	color: #000042;
 }
 
@@ -171,6 +199,7 @@ body {
 	min-height: calc(100dvh - 80px); /* ✅ fits on screen minus header */
 	padding: 1vh 0;
 	box-sizing: border-box;
+	/*background-color: green;*/
 }
 
 /* Tables section */
@@ -188,6 +217,19 @@ body {
 	padding: 1vw;
 	box-sizing: border-box;
 	margin-left: 2vw;
+	/*background-color: yellow;*/
+}
+
+.tables-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: -45px;
+  /*background-color: orange;*/
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  
 }
 
 /* Section titles */
@@ -201,18 +243,55 @@ body {
 }
 
 /* Info + test tables */
-.info-table, .test-table {
+.info-table, {
 	width: 100%;
 	text-align: center;
+	
 }
 
-.info-table td, .test-table td {
+.test-table {
+	/*width: 45%;*/        /* didnt do anything */
+	text-align: center;
+	margin: 0 auto;
+}
+
+.table-title1 {
+	color: #000042;
+	text-align: center;
+	font-size: 23px;
+	margin-bottom: 12px;
+	font-weight: bold;
+	margin-top: 25px;
+	/*background-color: pink;*/
+}
+
+.table-title1,
+.test-list {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+
+.info-table td, {
 	text-align: center;
 	color: white;
 	padding: 6px;
 	border: 2px solid #000042;
 	width: 50%;
 }
+.test-table td {
+	text-align: center;
+	color: white;
+	padding: 6px;
+	border: 2px solid #000042;
+	width: 50%;     
+	/*background: blue;            /* works chanGing the width OF red and grey test table */
+}
+
 
 /* Alternate row colors */
 .info-table tr:nth-child(even), 
@@ -273,11 +352,9 @@ body {
 	white-space: normal;
 	word-break: break-word;
 }
+
+
 h1 {
   padding-top: 30px;
   padding-bottom: 10px;
-}
-
-.tables-wrapper {
-  margin-top: -45px;
 }
