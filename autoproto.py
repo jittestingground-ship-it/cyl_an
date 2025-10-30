@@ -432,17 +432,27 @@ TEST RESULTS SUMMARY:
     from email.mime.multipart import MIMEMultipart
     from email.mime.base import MIMEBase
     from email import encoders
-    msg = MIMEMultipart()
+    msg = MIMEMultipart('related')
     msg['From'] = sender
     msg['To'] = to_addr
     msg['Subject'] = subject
-    msg.attach(MIMEText(f"Attached is the report image for order {order_id}.", 'plain'))
+    # HTML body with inline image
+    html = f"""
+    <html>
+        <body>
+            <p>Report image for order {order_id}:</p>
+            <img src=\"cid:reportimage\" style=\"max-width:600px;width:100%;object-fit:contain;\">
+        </body>
+        </html>
+        """
+    msg.attach(MIMEText(html, 'html'))
     with open(img_path, 'rb') as f:
-        part = MIMEBase('application', 'octet-stream')
-        part.set_payload(f.read())
-        encoders.encode_base64(part)
-        part.add_header('Content-Disposition', f'attachment; filename="{os.path.basename(img_path)}"')
-        msg.attach(part)
+            img = MIMEBase('image', 'png')
+            img.set_payload(f.read())
+            encoders.encode_base64(img)
+            img.add_header('Content-ID', '<reportimage>')
+            img.add_header('Content-Disposition', 'inline', filename=os.path.basename(img_path))
+            msg.attach(img)
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
