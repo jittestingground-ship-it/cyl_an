@@ -15,16 +15,30 @@ if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
 def find_external_drive():
-    from string import ascii_uppercase
-    for letter in ascii_uppercase:
-        drive = f"{letter}:\\"
-        if os.path.exists(drive) and drive != "C:\\":
-            return drive
+    """Find external drive on Linux systems."""
+    # Common Linux mount points for external drives
+    mount_points = ["/media/kw", "/mnt", "/media"]
+    for mount_point in mount_points:
+        if os.path.exists(mount_point):
+            try:
+                for entry in os.listdir(mount_point):
+                    drive_path = os.path.join(mount_point, entry)
+                    if os.path.ismount(drive_path):
+                        return drive_path
+            except PermissionError:
+                continue
+    # Fallback to BASE_DIR if no external drive found
     return BASE_DIR
 EXT_DRIVE = find_external_drive()
 EXT_PATH = os.path.join(EXT_DRIVE, "autoproto_data")
-if not os.path.exists(EXT_PATH):
-    os.makedirs(EXT_PATH)
+EXT_EXCEL_DATA = os.path.join(EXT_DRIVE, "excel_data")
+EXT_TEST_DATA = os.path.join(EXT_DRIVE, "test_data")
+EXT_REPORT_IMAGES = os.path.join(EXT_DRIVE, "report_images")
+
+# Create external directories if they don't exist
+for ext_dir in [EXT_PATH, EXT_EXCEL_DATA, EXT_TEST_DATA, EXT_REPORT_IMAGES]:
+    if not os.path.exists(ext_dir):
+        os.makedirs(ext_dir)
 
 DB_PATH = os.path.join(EXT_PATH, "OrderData.db")
 conn = sqlite3.connect(DB_PATH)
@@ -47,13 +61,7 @@ conn.commit()
 conn.close()
 
 
-def add_fake_order(order_id):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("INSERT OR IGNORE INTO orders (orderID, name, email, phone, address) VALUES (?, ?, ?, ?, ?)",
-              (order_id, "Kane Industries", "kane@jitindustries.com", "555-1234", "123 Main St"))
-    conn.commit()
-    conn.close()
+
 
 # Commented out fake orders - only show Excel data
 # add_fake_order("J1002251124")
@@ -75,7 +83,7 @@ def dashboard_colored():
     conn.close()
     # Read Excel data files and sort by timestamp (newest first)
     excel_data = []
-    excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+    excel_files = glob.glob(os.path.join(EXT_EXCEL_DATA, "*.json"))
     file_data = []
     for file_path in excel_files:
         try:
@@ -101,7 +109,7 @@ def dashboard():
     
     # Read Excel data files and sort by timestamp (newest first)
     excel_data = []
-    excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+    excel_files = glob.glob(os.path.join(EXT_EXCEL_DATA, "*.json"))
     
     # Extract timestamp from filename and sort
     file_data = []
@@ -135,7 +143,7 @@ def details(order_id):
     # If order not in database, check if it's from Excel data
     if not order:
         # Look for Excel data with this order ID
-        excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+        excel_files = glob.glob(os.path.join(EXT_EXCEL_DATA, "*.json"))
         for file_path in excel_files:
             try:
                 with open(file_path, 'r') as f:
@@ -165,7 +173,7 @@ def details(order_id):
     
     # If no database file, look in test_data folder where scanner saves
     if not test_file:
-        test_data_dir = "/home/kw/cyl_a/test_data"
+        test_data_dir = EXT_TEST_DATA
         if os.path.exists(test_data_dir):
             # Find H5 files matching this order ID
             h5_files = glob.glob(f"{test_data_dir}/{order_id}_*.h5")
@@ -252,7 +260,7 @@ def report(order_id):
     conn.close()
     # If order not in database, check if it's from Excel data
     if not order:
-        excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+        excel_files = glob.glob(os.path.join(EXT_EXCEL_DATA, "*.json"))
         for file_path in excel_files:
             try:
                 with open(file_path, 'r') as f:
@@ -278,7 +286,7 @@ def report(order_id):
             test_file = None
     # If no database file, look in test_data folder where scanner saves
     if not test_file:
-        test_data_dir = "/home/kw/cyl_a/test_data"
+        test_data_dir = EXT_TEST_DATA
         if os.path.exists(test_data_dir):
             h5_files = glob.glob(f"{test_data_dir}/{order_id}_*.h5")
             if h5_files:
@@ -353,10 +361,7 @@ def trigger_capture_report(order_id):
 def serve_report_image(filename):
     from flask import send_from_directory
     import os
-    from find_external_drive import find_external_drive
-    ext_drive = find_external_drive()
-    image_dir = os.path.join(ext_drive, "report_images")
-    return send_from_directory(image_dir, filename)
+    return send_from_directory(EXT_REPORT_IMAGES, filename)
 
 
 @app.route('/email_preview/<order_id>')
@@ -375,7 +380,7 @@ def send_email(order_id):
     
     # If order not in database, check Excel data
     if not order:
-        excel_files = glob.glob("/home/kw/cyl_a/excel_data/*.json")
+        excel_files = glob.glob(os.path.join(EXT_EXCEL_DATA, "*.json"))
         for file_path in excel_files:
             try:
                 with open(file_path, 'r') as f:
@@ -389,7 +394,7 @@ def send_email(order_id):
     
     # Get test results for email body
     test_results = ""
-    test_data_dir = "/home/kw/cyl_a/test_data"
+    test_data_dir = EXT_TEST_DATA
     if os.path.exists(test_data_dir):
         h5_files = glob.glob(f"{test_data_dir}/{order_id}_*.h5")
         if h5_files:
@@ -421,10 +426,7 @@ TEST RESULTS SUMMARY:
     to_addr = DEFAULT_EMAIL
     subject = f"Report Image for Order {order_id}"
     # Find the report image for this order in the external drive
-    from find_external_drive import find_external_drive
-    ext_drive = find_external_drive()
-    image_dir = os.path.join(ext_drive, "report_images")
-    img_path = os.path.join(image_dir, f"{order_id}.png")
+    img_path = os.path.join(EXT_REPORT_IMAGES, f"{order_id}.png")
     if not os.path.exists(img_path):
         return jsonify({"status": "Error", "error": "Report image not found."})
     import email, email.mime.multipart, email.mime.base, email.encoders
