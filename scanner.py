@@ -6,6 +6,7 @@ import os
 from datetime import datetime
 from pymodbus.client import ModbusTcpClient
 import serial
+import requests
 
 # Find external drive (use existing discovery system)
 def find_external_drive():
@@ -22,7 +23,7 @@ if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
 # Config
-PLC_IP = "192.168.1.11"
+PLC_IP = "192.168.0.11"
 PLC_PORT = 502
 SERIAL_PORT = "/dev/ttyUSB0"
 SERIAL_BAUD = 9600
@@ -97,6 +98,16 @@ def save_to_hdf5(order_id, timestamps, pressure_a, pressure_b, metadata):
         for key, value in metadata.items():
             meta_grp.create_dataset(key, data=np.string_(str(value)))
     print(f"✅ Saved: {file_path}")
+    
+    # Automatically trigger report capture and email after saving test data
+    try:
+        response = requests.post(f'http://localhost:5050/trigger_capture_report/{order_id}', timeout=30)
+        if response.status_code == 200:
+            print(f"📸 Report captured and email sent for {order_id}")
+        else:
+            print(f"⚠️ Automation failed: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"⚠️ Could not trigger automation: {e}")
 
 def run_test(order_id):
     client = ModbusTcpClient(PLC_IP, port=PLC_PORT)
