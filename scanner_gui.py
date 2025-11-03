@@ -31,7 +31,7 @@ if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
 # Config
-PLC_IP = "192.168.0.11"
+PLC_IP = "192.168.1.11"
 PLC_PORT = 502
 SERIAL_PORT = "/dev/ttyUSB0"
 SERIAL_BAUD = 9600

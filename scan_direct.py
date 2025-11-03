@@ -43,7 +43,7 @@ if not devices:
     print("1. Check PLC power - is it turned on?")
     print("2. Check Ethernet cable connection")
     print("3. Check PLC network configuration:")
-    print("   - PLC IP should be 192.168.0.11")
+    print("   - PLC IP should be 192.168.1.11")
     print("   - Subnet mask: 255.255.255.0") 
     print("   - Gateway: 192.168.0.10 (this Pi)")
     print("4. Some PLCs need crossover cable for direct connection")

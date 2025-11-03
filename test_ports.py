@@ -45,8 +45,8 @@ def scan_ports_on_ip(ip):
     return open_ports
 
 # Test the original PLC IP
-print("Testing original PLC IP: 192.168.0.11")
-scan_ports_on_ip("192.168.0.11")
+print("Testing original PLC IP: 192.168.1.11")
+scan_ports_on_ip("192.168.1.11")
 
 # Test some devices we found on current network
 test_ips = ["192.168.1.12", "192.168.1.22", "192.168.1.8"]
@@ -57,7 +57,7 @@ for ip in test_ips:
         print(f"  🎯 Found {len(open_ports)} open ports on {ip}")
 
 print(f"\n📝 Current configuration:")
-print(f"  PLC_IP = 192.168.0.11")
+print(f"  PLC_IP = 192.168.1.11")
 print(f"  PLC_PORT = 502")
 print(f"\nPort 502 is the STANDARD Modbus TCP port.")
 print(f"If your PLC uses a different port, we need to update PLC_PORT in the code.")

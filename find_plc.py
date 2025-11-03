@@ -3,7 +3,7 @@ import socket
 from pymodbus.client import ModbusTcpClient
 
 # Found devices from ARP table
-test_ips = ["192.168.1.12", "192.168.1.22", "192.168.1.8"]
+test_ips = ["192.168.0.11", "192.168.1.12", "192.168.1.22", "192.168.1.8"]
 
 def test_modbus_connection(ip):
     print(f"\nTesting {ip}:502...")
