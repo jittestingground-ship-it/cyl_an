@@ -27,36 +27,24 @@
                     <li><span class="list-label">Scan barcode to run test</span></li>
                     {% else %}
                     <li>
-                        <span class="list-label">Set Pressure:</span>
-                        <span class="list-value">{{ meta['set_pressure'] }}</span>
-                    </li>
-                    <li>
-                        <span class="list-label">Avg Pressure A:</span>
-                        <span class="list-value">{{ meta['avg_pressure_a'] }}</span>
-                    </li>
-                    <li>
-                        <span class="list-label">Avg Pressure B:</span>
-                        <span class="list-value">{{ meta['avg_pressure_b'] }}</span>
-                    </li>
-                    <li>
-                        <span class="list-label">Max Leak Pressure:</span>
-                        <span class="list-value">{{ meta['max_leak_pressure'] }}</span>
-                    </li>
-                    <li>
-                        <span class="list-label">Cycle Count:</span>
-                        <span class="list-value">{{ meta['cycle_count'] }}</span>
-                    </li>
-                    <li>
-                        <span class="list-label">Test Time:</span>
-                        <span class="list-value">{{ meta['test_time'] }}</span>
-                    </li>
-                    <li>
-                        <span class="list-label">Samples:</span>
-                        <span class="list-value">{{ meta['samples'] }}</span>
-                    </li>
-                    <li>
-                        <span class="list-label">Test Pass/Fail:</span>
+                        <span class="list-label">Pass Fail:</span>
                         <span class="list-value">{{ meta['test_pass_fail'] }}</span>
+                    </li>
+                    <li>
+                        <span class="list-label">AVG (psi) A:</span>
+                        <span class="list-value">{{ '%.2f' % meta['avg_pressure_a'] if meta['avg_pressure_a'] is not none else '' }}</span>
+                    </li>
+                    <li>
+                        <span class="list-label">AVG (psi) B:</span>
+                        <span class="list-value">{{ '%.2f' % meta['avg_pressure_b'] if meta['avg_pressure_b'] is not none else '' }}</span>
+                    </li>
+                    <li>
+                        <span class="list-label">Set Pressure:</span>
+                        <span class="list-value">{{ '%.2f' % meta['set_pressure'] if meta['set_pressure'] is not none else '' }}</span>
+                    </li>
+                    <li>
+                        <span class="list-label">Max Leak PSI:</span>
+                        <span class="list-value">{{ '%.2f' % meta['max_leak_pressure'] if meta['max_leak_pressure'] is not none else '' }}</span>
                     </li>
                     {# Removed Saved At row #}
                     {% endif %}
