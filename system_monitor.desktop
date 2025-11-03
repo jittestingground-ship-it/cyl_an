@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=System Status
+Comment=Launch the PyQt5 System Monitor
+Exec=python3 /home/kw/cyl_a/system_monitor_qt.py"
+Icon=utilities-system-monitor
+Terminal=false
+Categories=Utility;

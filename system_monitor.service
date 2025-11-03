@@ -1,0 +1,13 @@
+[Unit]
+Description=Start System Monitor at boot
+After=network.target
+
+[Service]
+Type=simple
+User=kw
+ExecStart=/home/kw/cyl_a/start_monitor.sh
+WorkingDirectory=/home/kw/cyl_a
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

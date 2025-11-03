@@ -11,19 +11,20 @@ h1, h2, h3, p {
 	margin-block-end: 0;
 }
 
-.tables-wrapper, .chart-wrapper {
+.chart-wrapper {
 	height: 100%;
 	box-sizing: border-box;
 }
 
 .tables-wrapper {
-	background: transparent;
+	background: orange;
 	border-radius: 8px;
 	padding: 0.3vw 0.5vw; /* reduced padding for better fit */
 	align-self: flex-end;
 	width: 100%;
 	max-width: 100%;
-	height: auto;
+	height:90%
+;
 }
 
 .tables, .chart, .tables-wrapper, .chart-wrapper {
@@ -121,9 +122,10 @@ h1, h2, h3, p {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	font-size: 16px;
-	border: solid 1px #ffffff;
+	font-size: 75%;
+	border: solid 1px transparent;
 	border-radius: 4px;
+	font-weight: bold;
 	
 }
 
@@ -199,7 +201,7 @@ body {
 	min-height: calc(100dvh - 80px); /* ✅ fits on screen minus header */
 	padding: 1vh 0;
 	box-sizing: border-box;
-	/*background-color: green;*/
+	background-color: green;
 }
 
 /* Tables section */
@@ -217,7 +219,7 @@ body {
 	padding: 1vw;
 	box-sizing: border-box;
 	margin-left: 2vw;
-	/*background-color: yellow;*/
+	background-color: yellow;
 }
 
 .tables-wrapper {
@@ -226,7 +228,7 @@ body {
   justify-content: center;
   margin-top: -45px;
   /*background-color: orange;*/
-  width: 50%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   
@@ -239,12 +241,12 @@ body {
 	font-size: 23px;
 	margin-bottom: 12px;
 	font-weight: bold;
-	margin-top: 25px;
+	margin-top: 15%;
 }
 
 /* Info + test tables */
 .info-table, {
-	width: 100%;
+	width: 50%;
 	text-align: center;
 	
 }
@@ -267,7 +269,7 @@ body {
 
 .table-title1,
 .test-list {
-    width: 100%;
+    width: 50%;
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -286,9 +288,9 @@ body {
 .test-table td {
 	text-align: center;
 	color: white;
-	padding: 6px;
+	paddin: 6px;
 	border: 2px solid #000042;
-	width: 50%;     
+	width: 60%;     
 	/*background: blue;            /* works chanGing the width OF red and grey test table */
 }
 
@@ -302,6 +304,7 @@ body {
 .info-table tr:nth-child(odd), 
 .test-table tr:nth-child(odd) {
 	background: #9E2328;
+	padding: 4px 4px 2px 2px;
 }
 
 /* Chart area */

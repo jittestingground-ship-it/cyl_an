@@ -1,0 +1,442 @@
+Oct 30 12:42:04 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:04 kw python3[881]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:42:04 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:42:04 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:42:15 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 1.
+Oct 30 12:42:15 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:15 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:15 kw python3[1465]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:42:15 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:42:15 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:42:25 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 2.
+Oct 30 12:42:25 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:25 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:25 kw python3[1900]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:42:25 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:42:25 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:42:35 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 3.
+Oct 30 12:42:35 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:35 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:35 kw python3[1911]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:42:35 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:42:35 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:42:45 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 4.
+Oct 30 12:42:45 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:46 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:46 kw python3[1923]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:42:46 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:42:46 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:42:56 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 5.
+Oct 30 12:42:56 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:56 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:42:56 kw python3[1932]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:42:56 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:42:56 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:43:06 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 6.
+Oct 30 12:43:06 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:06 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:06 kw python3[2056]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:43:06 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:43:06 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:43:16 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 7.
+Oct 30 12:43:16 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:16 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:16 kw python3[2185]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:43:16 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:43:16 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:43:26 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 8.
+Oct 30 12:43:26 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:27 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:27 kw python3[2411]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:43:27 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:43:27 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:43:37 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 9.
+Oct 30 12:43:37 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:37 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:37 kw python3[2565]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:43:37 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:43:37 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:43:47 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 10.
+Oct 30 12:43:47 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:47 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:47 kw python3[2588]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:43:47 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:43:47 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:43:57 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 11.
+Oct 30 12:43:57 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:57 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:43:57 kw python3[2596]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:43:57 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:43:57 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:44:07 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 12.
+Oct 30 12:44:07 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:07 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:08 kw python3[2627]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:44:08 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:44:08 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:44:18 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 13.
+Oct 30 12:44:18 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:18 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:18 kw python3[2674]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:44:18 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:44:18 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:44:28 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 14.
+Oct 30 12:44:28 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:28 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:28 kw python3[2734]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:44:28 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:44:28 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:44:38 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 15.
+Oct 30 12:44:38 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:38 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:38 kw python3[2758]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:44:38 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:44:38 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:44:48 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 16.
+Oct 30 12:44:48 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:48 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:49 kw python3[2766]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:44:49 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:44:49 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:44:59 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 17.
+Oct 30 12:44:59 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:59 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:44:59 kw python3[2776]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:44:59 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:44:59 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:45:09 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 18.
+Oct 30 12:45:09 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:09 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:09 kw python3[2784]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:45:09 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:45:09 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:45:19 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 19.
+Oct 30 12:45:19 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:19 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:19 kw python3[2792]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:45:19 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:45:19 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:45:29 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 20.
+Oct 30 12:45:29 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:30 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:30 kw python3[2801]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:45:30 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:45:30 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:45:40 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 21.
+Oct 30 12:45:40 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:40 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:40 kw python3[2810]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:45:40 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:45:40 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:45:50 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 22.
+Oct 30 12:45:50 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:50 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:45:50 kw python3[2818]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:45:50 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:45:50 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:46:00 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 23.
+Oct 30 12:46:00 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:00 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:00 kw python3[2826]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:46:00 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:46:00 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:46:10 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 24.
+Oct 30 12:46:10 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:10 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:11 kw python3[2835]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:46:11 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:46:11 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:46:21 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 25.
+Oct 30 12:46:21 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:21 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:21 kw python3[2844]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:46:21 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:46:21 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:46:31 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 26.
+Oct 30 12:46:31 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:31 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:31 kw python3[2853]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:46:31 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:46:31 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:46:41 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 27.
+Oct 30 12:46:41 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:41 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:41 kw python3[2861]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:46:41 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:46:41 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:46:51 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 28.
+Oct 30 12:46:51 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:52 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:46:52 kw python3[2893]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:46:52 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:46:52 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:47:02 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 29.
+Oct 30 12:47:02 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:02 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:02 kw python3[2901]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:47:02 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:47:02 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:47:12 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 30.
+Oct 30 12:47:12 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:12 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:12 kw python3[2913]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:47:12 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:47:12 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:47:22 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 31.
+Oct 30 12:47:22 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:22 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:22 kw python3[2922]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:47:22 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:47:22 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:47:32 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 32.
+Oct 30 12:47:32 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:33 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:33 kw python3[2930]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:47:33 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:47:33 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:47:43 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 33.
+Oct 30 12:47:43 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:43 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:43 kw python3[2936]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:47:43 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:47:43 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:47:53 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 34.
+Oct 30 12:47:53 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:53 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:47:53 kw python3[2946]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:47:53 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:47:53 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:48:03 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 35.
+Oct 30 12:48:03 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:03 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:03 kw python3[2957]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:48:03 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:48:03 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:48:13 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 36.
+Oct 30 12:48:13 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:14 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:14 kw python3[2966]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:48:14 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:48:14 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:48:24 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 37.
+Oct 30 12:48:24 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:24 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:24 kw python3[2974]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:48:24 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:48:24 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:48:34 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 38.
+Oct 30 12:48:34 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:34 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:34 kw python3[2982]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:48:34 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:48:34 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:48:44 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 39.
+Oct 30 12:48:44 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:44 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:44 kw python3[2992]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:48:44 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:48:44 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:48:54 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 40.
+Oct 30 12:48:54 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:55 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:48:55 kw python3[3002]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:48:55 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:48:55 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:49:05 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 41.
+Oct 30 12:49:05 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:05 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:05 kw python3[3010]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:49:05 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:49:05 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:49:15 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 42.
+Oct 30 12:49:15 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:15 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:15 kw python3[3020]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:49:15 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:49:15 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:49:25 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 43.
+Oct 30 12:49:25 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:25 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:25 kw python3[3030]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:49:25 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:49:25 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:49:35 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 44.
+Oct 30 12:49:35 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:35 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:36 kw python3[3080]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:49:36 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:49:36 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:49:46 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 45.
+Oct 30 12:49:46 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:46 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:46 kw python3[3092]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:49:46 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:49:46 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:49:56 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 46.
+Oct 30 12:49:56 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:56 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:49:56 kw python3[3100]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:49:56 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:49:56 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:50:06 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 47.
+Oct 30 12:50:06 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:06 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:06 kw python3[3120]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:50:06 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:50:06 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:50:16 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 48.
+Oct 30 12:50:16 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:17 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:17 kw python3[3171]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:50:17 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:50:17 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:50:27 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 49.
+Oct 30 12:50:27 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:27 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:27 kw python3[3182]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:50:27 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:50:27 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:50:37 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 50.
+Oct 30 12:50:37 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:37 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:37 kw python3[3192]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:50:37 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:50:37 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:50:47 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 51.
+Oct 30 12:50:47 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:47 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:47 kw python3[3202]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:50:47 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:50:47 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:50:57 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 52.
+Oct 30 12:50:57 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:57 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:50:58 kw python3[3211]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:50:58 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:50:58 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:51:08 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 53.
+Oct 30 12:51:08 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:08 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:08 kw python3[3219]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:51:08 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:51:08 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:51:18 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 54.
+Oct 30 12:51:18 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:18 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:18 kw python3[3231]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:51:18 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:51:18 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:51:28 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 55.
+Oct 30 12:51:28 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:28 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:28 kw python3[3239]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:51:28 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:51:28 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:51:38 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 56.
+Oct 30 12:51:38 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:39 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:39 kw python3[3247]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:51:39 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:51:39 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:51:49 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 57.
+Oct 30 12:51:49 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:49 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:49 kw python3[3256]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:51:49 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:51:49 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:51:59 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 58.
+Oct 30 12:51:59 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:59 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:51:59 kw python3[3267]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:51:59 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:51:59 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:52:09 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 59.
+Oct 30 12:52:09 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:09 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:09 kw python3[3323]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:52:09 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:52:09 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:52:19 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 60.
+Oct 30 12:52:19 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:19 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:20 kw python3[3333]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:52:20 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:52:20 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:52:30 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 61.
+Oct 30 12:52:30 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:30 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:30 kw python3[3344]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:52:30 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:52:30 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:52:40 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 62.
+Oct 30 12:52:40 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:40 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:40 kw python3[3352]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:52:40 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:52:40 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:52:50 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 63.
+Oct 30 12:52:50 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:50 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:52:50 kw python3[3361]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:52:50 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:52:50 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:53:00 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 64.
+Oct 30 12:53:00 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:00 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:01 kw python3[3370]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:53:01 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:53:01 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:53:11 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 65.
+Oct 30 12:53:11 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:11 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:11 kw python3[3378]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:53:11 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:53:11 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:53:21 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 66.
+Oct 30 12:53:21 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:21 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:21 kw python3[3388]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:53:21 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:53:21 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:53:31 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 67.
+Oct 30 12:53:31 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:31 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:31 kw python3[3396]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:53:31 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:53:31 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:53:41 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 68.
+Oct 30 12:53:41 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:42 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:42 kw python3[3406]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:53:42 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:53:42 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:53:52 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 69.
+Oct 30 12:53:52 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:52 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:53:52 kw python3[3413]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:53:52 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:53:52 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:54:02 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 70.
+Oct 30 12:54:02 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:54:02 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:54:02 kw python3[3421]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:54:02 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:54:02 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:54:12 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 71.
+Oct 30 12:54:12 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:54:12 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:54:12 kw python3[3429]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:54:12 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:54:12 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:54:22 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 72.
+Oct 30 12:54:22 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:54:23 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:54:23 kw python3[3438]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:54:23 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:54:23 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
+Oct 30 12:54:33 kw systemd[823]: cylinder-start.service: Scheduled restart job, restart counter is at 73.
+Oct 30 12:54:33 kw systemd[823]: Stopped cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:54:33 kw systemd[823]: Started cylinder-start.service - Cylinder services starter (app, dashboard, scanner).
+Oct 30 12:54:33 kw python3[3450]: /usr/bin/python3: can't open file '/home/kw/cylinder_analysis/plc_scripts/start_services.py': [Errno 2] No such file or directory
+Oct 30 12:54:33 kw systemd[823]: [0;1;39m[0;1;31m[0;1;39mcylinder-start.service: Main process exited, code=exited, status=2/INVALIDARGUMENT[0m
+Oct 30 12:54:33 kw systemd[823]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mcylinder-start.service: Failed with result 'exit-code'.[0m
