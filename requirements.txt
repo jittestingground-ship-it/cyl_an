@@ -1,3 +1,6 @@
 flask
 h5py
 pymodbus
+playwright
+pandas
+openpyxl
